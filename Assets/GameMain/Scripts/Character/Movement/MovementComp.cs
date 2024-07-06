@@ -8,37 +8,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Assets.GameMain.Scripts.Character.Movement
 {
     public class MovementComp : MonoBehaviour, ILooper
     {
-        public float MaxVelocitySpeed;
+        public float MaxSpeed;
+
+        public float Acceleration;
 
         public float curForwardSpeed;
+
+        public float NormalSpeed;
         
         public Vector2 CurVelocity { get; private set; }
 
         private Vector3 mNormalVec;
         private BlackHole mBlackHole;
 
+
+        private InputManager mInputManager;
+
         private void Start()
         {
             mBlackHole = GameObject.FindGameObjectWithTag("BlackHole").GetComponent<BlackHole>();
+            mInputManager = InputManager.Instance;
         }
 
         public void OnUpdate(float eclapse)
         {
-            Debug.DrawLine(transform.position, transform.position + transform.forward, Color.blue);
-            
-            Debug.DrawLine(transform.position, transform.position + Vector3.forward,
-                Color.green);
-            
-            var tangentDir = Vector3.Cross(mNormalVec, Vector3.forward);
-
-            Debug.DrawLine(transform.position, transform.position + transform.up,
-                Color.red);
-            
             if (InputManager.Instance.MovementInput.magnitude > 0.05f)
             {
                 Move(eclapse);
@@ -50,14 +49,17 @@ namespace Assets.GameMain.Scripts.Character.Movement
             mNormalVec = transform.position - mBlackHole.transform.position;
             
             var tangentDir = Vector3.Cross(mNormalVec, Vector3.forward);
-            var targetDir = transform.position + tangentDir.normalized;
+            var normalDir = mNormalVec.normalized * -mInputManager.MovementInput.x;
 
-            var angle = Vector3.SignedAngle(tangentDir.normalized, Vector3.up,  Vector3.forward);
-            Debug.Log($"angle: {angle}");
+            curForwardSpeed += mInputManager.MovementInput.y * Acceleration * eclapse;
+            curForwardSpeed = Mathf.Clamp(curForwardSpeed, 0f, MaxSpeed);
+            
+            var movement = tangentDir.normalized * curForwardSpeed + normalDir * NormalSpeed;
+            
 
             Debug.DrawLine(transform.position, transform.position + tangentDir * curForwardSpeed, Color.red);
-            transform.Translate(tangentDir.normalized * curForwardSpeed * eclapse);
-        }   
+            transform.Translate(movement * eclapse);
+        }
 
         public void OnFixedUpdate(float eclapse)
         {
