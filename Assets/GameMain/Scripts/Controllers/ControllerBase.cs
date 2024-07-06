@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameMain.Scripts.Controllers
 {
-    public class ControllerBase : MonoBehaviour, IController, ILooper
+    public class ControllerBase : MonoBehaviour, ILooper
     {
         public virtual void OnGameInit() { }
         
