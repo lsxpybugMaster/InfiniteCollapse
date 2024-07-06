@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b327683fdce6f6c408a1d8a61dc32fcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AbsorbSpeed: 3
+  AbsorbSpeed: 5
   OuterAccelerateRadius: 10
   OuterAclColl: {fileID: 0}
   InnerAbsorbColl: {fileID: 0}
