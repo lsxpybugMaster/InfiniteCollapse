@@ -15,6 +15,8 @@ namespace Assets.GameMain.Scripts.Character.Movement
     {
         public float MaxVelocitySpeed;
 
+        public float curForwardSpeed;
+        
         public Vector2 CurVelocity { get; private set; }
 
         private Vector3 mNormalVec;
@@ -22,32 +24,45 @@ namespace Assets.GameMain.Scripts.Character.Movement
 
         private void Start()
         {
-            mBlackHole = GameObject.Find("BlackHole").GetComponent<BlackHole>();
+            mBlackHole = GameObject.FindGameObjectWithTag("BlackHole").GetComponent<BlackHole>();
         }
 
         public void OnUpdate(float eclapse)
         {
-            mNormalVec = transform.position - mBlackHole.transform.position;
-            mNormalVec.Normalize();
+            Debug.DrawLine(transform.position, transform.position + transform.forward, Color.blue);
+            
+            Debug.DrawLine(transform.position, transform.position + Vector3.forward,
+                Color.green);
+            
+            var tangentDir = Vector3.Cross(mNormalVec, Vector3.forward);
 
+            Debug.DrawLine(transform.position, transform.position + transform.up,
+                Color.red);
+            
             if (InputManager.Instance.MovementInput.magnitude > 0.05f)
             {
-                var angle = Vector3.Angle(Vector2.up, mNormalVec);
-                var movement = InputManager.Instance.MovementInput;
-
-                var normalDir = mNormalVec * movement.y;
-                var tangentDir = Vector3.ProjectOnPlane(normalDir, Vector3.forward) * movement.x;
-
-                transform.position += (normalDir + tangentDir) * Time.deltaTime;
-
-                Debug.Log($"move update:  normal -- {mNormalVec}  movement: {normalDir + tangentDir}");
+                Move(eclapse);
             }
         }
 
-        public void OnFixedUpdate()
+        private void Move(float eclapse)
         {
-            throw new NotImplementedException();
-        }
+            mNormalVec = transform.position - mBlackHole.transform.position;
+            
+            var tangentDir = Vector3.Cross(mNormalVec, Vector3.forward);
+            var targetDir = transform.position + tangentDir.normalized;
 
+            var angle = Vector3.SignedAngle(tangentDir.normalized, Vector3.up,  Vector3.forward);
+            Debug.Log($"angle: {angle}");
+
+            Debug.DrawLine(transform.position, transform.position + tangentDir * curForwardSpeed, Color.red);
+            transform.Translate(tangentDir.normalized * curForwardSpeed * eclapse);
+        }   
+
+        public void OnFixedUpdate(float eclapse)
+        {
+            
+        }
+        
     }
 }

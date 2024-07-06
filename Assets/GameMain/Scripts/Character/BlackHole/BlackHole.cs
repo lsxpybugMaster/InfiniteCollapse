@@ -27,7 +27,7 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
             
         }
 
-        public void OnFixedUpdate()
+        public void OnFixedUpdate(float eclapse)
         {
             
         }
