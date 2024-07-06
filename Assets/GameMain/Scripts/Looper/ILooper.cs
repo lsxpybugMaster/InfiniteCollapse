@@ -9,6 +9,6 @@ namespace Assets.GameMain.Scripts.Looper
     public interface ILooper
     {
         void OnUpdate(float eclapse);
-        void OnFixedUpdate();
+        void OnFixedUpdate(float eclapse);
     }
 }
