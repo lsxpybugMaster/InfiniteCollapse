@@ -34,8 +34,6 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
             var dis = Vector2.Distance(transform.position, position);
             return AbsorbSpeed / (dis * dis);
         }
-        
-        
 
         public void OnUpdate(float eclapse)
         {
@@ -43,6 +41,7 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
 
         private void onOuterCollision(Collision coll)
         {
+            Debug.Log(1);
             if (coll.transform.TryGetComponent(out PlayerController player))
             {
                 player.OnDie();

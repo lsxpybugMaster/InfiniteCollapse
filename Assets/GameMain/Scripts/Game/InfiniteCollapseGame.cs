@@ -26,6 +26,8 @@ namespace GameMain.Scripts.Game
 
             Loopers.Add(blackHole.GetComponent<ILooper>());
             Loopers.Add(player.GetComponent<ILooper>());
+
+            Loopers.ForEach(x => x.OnGameInit());
         }
 
         public override void Update(float elapse)
@@ -36,6 +38,13 @@ namespace GameMain.Scripts.Game
         public override void FixedUpdate(float elapse)
         {
             Loopers.ForEach(x => x.OnFixedUpdate(elapse));
+        }
+        
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            
+            Loopers.ForEach(x => x.OnGameShutdown());
         }
 
         public IArchitecture GetArchitecture()
