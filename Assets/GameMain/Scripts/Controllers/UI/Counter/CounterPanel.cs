@@ -1,12 +1,18 @@
 ﻿using System;
+using Assets.GameMain.Scripts.Logic.Input;
 using QFramework;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace GameMain.Scripts.Controllers.UI.Counter
 {
     public class CounterPanelData : UIPanelData
     {
-        public Action OnCounterHappen;
+        public Action OnCounterHappen = null;
+
+        public CounterPanelData()
+        {
+        }
     }
     
     public class CounterPanel : UIPanel
@@ -15,7 +21,7 @@ namespace GameMain.Scripts.Controllers.UI.Counter
         
         protected override void OnInit(IUIData uiData = null)
         {
-            (uiData as CounterPanelData).OnCounterHappen += OnCounter;
+            InputManager.Instance.OnCounterInput += OnCounter;
         }
 
         protected override void OnOpen(IUIData uiData = null)
@@ -26,6 +32,7 @@ namespace GameMain.Scripts.Controllers.UI.Counter
         private void OnCounter()
         {
             // do sth
+            Debug.Log("Counter Success");
             
             // await
             OnClose();
@@ -33,7 +40,7 @@ namespace GameMain.Scripts.Controllers.UI.Counter
 
         protected override void OnClose()
         {
-            (mUIData as CounterPanelData).OnCounterHappen -= OnCounter;
+            InputManager.Instance.OnCounterInput -= OnCounter;
         }
     }
 }

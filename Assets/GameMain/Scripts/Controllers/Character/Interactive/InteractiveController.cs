@@ -1,5 +1,6 @@
 ﻿using System;
 using Assets.GameMain.Scripts.Character.Player;
+using Assets.GameMain.Scripts.Logic.Input;
 using GameMain.Scripts.Controllers.UI.Counter;
 using QFramework;
 using Sirenix.OdinInspector;
@@ -14,6 +15,9 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
     {
         protected Collider2D mColl;
 
+        private CircleCollider2D mOuterColl;
+        private CircleCollider2D mInnerColl;
+
         [Title("Attribute")]
         public float InitSpeed;
         public float Mass;
@@ -27,6 +31,7 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
         [InfoBox("碰撞会减少玩家的速度值")]
         public float SpeedDownNumOnCollide;
 
+        [InfoBox("除了残骸基本都可以跳qte")]
         public bool CanCounter;
 
         protected Action<InteractiveController> onCounterSuccess;
@@ -36,13 +41,42 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
             base.OnGameInit();
             GetComponent<Rigidbody2D>().gravityScale = 0f;
             mColl = GetComponent<Collider2D>();
+
+            mOuterColl = Instantiate(new GameObject("Outer"), transform).AddComponent<CircleCollider2D>();
+            mInnerColl = Instantiate(new GameObject("Inner"), transform).AddComponent<CircleCollider2D>();
+
+            mOuterColl.radius = OuterRadius;
+            mInnerColl.radius = InnerRadius;
+
+            mOuterColl.OnTriggerEnter2DEvent(coll =>
+            {
+                if (coll.TryGetComponent(out PlayerController player))
+                {
+                    OnOuterEnter(player);
+                }
+            }).UnRegisterWhenGameObjectDestroyed(gameObject);
+            mOuterColl.OnTriggerExit2DEvent(coll =>
+            {
+                if (coll.TryGetComponent(out PlayerController player))
+                {
+                    UIKit.ClosePanel<CounterPanel>();
+                }
+            }).UnRegisterWhenGameObjectDestroyed(gameObject);
+
+
+            mInnerColl.OnTriggerEnter2DEvent(coll => OnInnerCollision(coll.GetComponent<ControllerBase>()))
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void Start()
+        {
+            OnGameInit();
         }
 
         public override void OnUpdate(float eclapse)
-        {
-            CheckCollision();
+        { 
+            //CheckCollision();
         }
-
 
         public virtual void OnInnerCollision(ControllerBase other)
         {
@@ -55,6 +89,7 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
             }
         }
 
+        private bool hasCounterShowed;
         private void CheckCollision()
         {
             if (CanCounter)
@@ -63,7 +98,14 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
                 if (outerColl != null && outerColl.TryGetComponent(out PlayerController player))
                 {
                     OnOuterEnter(player);
+                    hasCounterShowed = true;
                 }
+                else if (hasCounterShowed)
+                {
+                    hasCounterShowed = false;
+                    OnOuterExit();
+                }
+                
             }
 
             var innerColl = Physics2D.OverlapCircle(transform.position, InnerRadius);
@@ -73,10 +115,21 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
             }
 
         }
-        
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawWireSphere(transform.position, InnerRadius);
+            Gizmos.DrawWireSphere(transform.position, OuterRadius);
+        }
+
         public virtual void OnOuterEnter(PlayerController player)
         {
-            
+            UIKit.OpenPanel<CounterPanel>(UILevel.PopUI, new CounterPanelData());
+        }
+
+        private void OnOuterExit()
+        {
+            UIKit.ClosePanel<CounterPanel>();
         }
     }
 }

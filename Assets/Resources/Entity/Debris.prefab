@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1585591224231553768}
   - component: {fileID: 3654337699139662090}
   m_Layer: 0
-  m_Name: Obstacle
+  m_Name: Debris
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122,8 +122,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InitSpeed: 5
   Mass: 5
-  SpeedDownNumOnCollide: 3
-  CanCounter: 0
+  InnerRadius: 0.68
+  OuterRadius: 1.3
+  SpeedDownNumOnCollide: 1.5
+  CanCounter: 1
 --- !u!58 &3654337699139662090
 CircleCollider2D:
   m_ObjectHideFlags: 0
