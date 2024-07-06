@@ -1,10 +1,11 @@
-using Assets.GameMain.Scripts.Looper;
+﻿using Assets.GameMain.Scripts.Looper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.GameMain.Scripts.Character.Player;
+//using GameMain.Scripts.Character.Base;
 using QFramework;
 using Sirenix.OdinInspector;
 using GameMain.Scripts.Controllers;
@@ -14,7 +15,6 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
 {
     public class BlackHole : ControllerBase
     {
-        [InfoBox("该数值乘以距离平方分之一")]
         public float AbsorbSpeed;
 
         public float OuterAccelerateRadius;
@@ -25,8 +25,7 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
         {
             OuterAclColl = transform.Find("Outer").GetComponent<CircleCollider2D>();
             InnerAbsorbColl = transform.Find("Inner").GetComponent<CircleCollider2D>();
-            OuterAclColl.OnTriggerEnter2DEvent(onOuterCollision).UnRegisterWhenGameObjectDestroyed(this);
-            InnerAbsorbColl.OnTriggerEnter2DEvent(onInnerCollision).UnRegisterWhenGameObjectDestroyed(this);
+            OuterAclColl.OnCollisionEnterEvent(onOuterCollision).UnRegisterWhenGameObjectDestroyed(this);
         }
 
         public float GetAbsorption(Vector2 position)
@@ -35,19 +34,25 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
             return AbsorbSpeed / (dis * dis);
         }
         
+        
 
-        private void onOuterCollision(Collider2D coll)
+        public void OnUpdate(float eclapse)
         {
-            Debug.Log("Coll enter");
+        }
+
+        private void onOuterCollision(Collision coll)
+        {
             if (coll.transform.TryGetComponent(out PlayerController player))
             {
-                player.OnDie();
+                
             }
         }
         
-        private void onInnerCollision(Collider2D coll)
+
+        public void OnFixedUpdate(float eclapse)
         {
             
         }
+
     }
 }
