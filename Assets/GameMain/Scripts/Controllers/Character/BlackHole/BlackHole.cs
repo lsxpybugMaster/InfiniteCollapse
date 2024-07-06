@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.GameMain.Scripts.Character.Player;
-using GameMain.Scripts.Character.Base;
+//using GameMain.Scripts.Character.Base;
 using QFramework;
 using Sirenix.OdinInspector;
 using GameMain.Scripts.Controllers;
@@ -44,7 +44,7 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
         {
             if (coll.transform.TryGetComponent(out PlayerController player))
             {
-                player.OnDie();
+                
             }
         }
         
