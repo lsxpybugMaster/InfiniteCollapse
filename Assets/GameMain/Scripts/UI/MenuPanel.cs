@@ -1,4 +1,5 @@
-﻿using QFramework;
+﻿using System.Collections.Generic;
+using QFramework;
 using UnityEngine.UI;
 
 namespace GameMain.Scripts.UI
@@ -9,7 +10,7 @@ namespace GameMain.Scripts.UI
     
     public class MenuPanel : UIPanel
     {
-        public Button startGameBtn;
+        public List<Button> levelSelectBtns = new List<Button>();
 
         protected override void OnClose()
         {
