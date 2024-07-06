@@ -18,6 +18,7 @@ namespace Assets.GameMain.Scripts.Character.Player
 
         private MovementComp mMovementComp;
 
+        public Action<PlayerController> OnPlayerDie;
 
         private void Awake()
         {
@@ -41,6 +42,11 @@ namespace Assets.GameMain.Scripts.Character.Player
         public void OnFixedUpdate(float eclapse)
         {
             
+        }
+
+        public void OnDie()
+        {
+            OnPlayerDie?.Invoke(this);
         }
 
     }

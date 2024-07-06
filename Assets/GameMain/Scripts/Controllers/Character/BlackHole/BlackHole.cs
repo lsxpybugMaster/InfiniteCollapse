@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.GameMain.Scripts.Character.Player;
-using GameMain.Scripts.Character.Base;
 using QFramework;
 using Sirenix.OdinInspector;
 using GameMain.Scripts.Controllers;
@@ -26,6 +25,7 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
             OuterAclColl = transform.Find("Outer").GetComponent<CircleCollider2D>();
             InnerAbsorbColl = transform.Find("Inner").GetComponent<CircleCollider2D>();
             OuterAclColl.OnCollisionEnterEvent(onOuterCollision).UnRegisterWhenGameObjectDestroyed(this);
+            InnerAbsorbColl.OnCollisionEnterEvent(onInnerCollision).UnRegisterWhenGameObjectDestroyed(this);
         }
 
         public float GetAbsorption(Vector2 position)
@@ -46,6 +46,11 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
             {
                 player.OnDie();
             }
+        }
+        
+        private void onInnerCollision(Collision coll)
+        {
+            
         }
         
 
