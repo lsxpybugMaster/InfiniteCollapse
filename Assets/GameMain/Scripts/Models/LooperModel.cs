@@ -12,14 +12,21 @@ namespace Assets.GameMain.Scripts.Models
 {
     public class LooperModel : AbstractModel
     {
-        private static string looperPath = Path.Combine(Application.persistentDataPath, "GameMain",
+        private ResLoader mResLoader;
+        
+        private static string looperPath = Path.Combine(Application.dataPath,
             "Resources", "Looper");
 
-        public List<ILooper> Loopers;
+        public List<GameObject> Loopers;
 
         protected override void OnInit()
         {
-            Loopers = Resources.LoadAll<GameObject>(looperPath).Select(go => go.GetComponent<ILooper>()).ToList();
+
+            Loopers = new();
+
+            Loopers.Add(Resources.Load<GameObject>("Looper/BlackHole"));
+            Loopers.Add(Resources.Load<GameObject>("Looper/Player"));
         }
+        
     }
 }

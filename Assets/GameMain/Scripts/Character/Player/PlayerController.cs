@@ -18,12 +18,26 @@ namespace Assets.GameMain.Scripts.Character.Player
         private MovementComp mMovementComp;
 
 
-        public void OnUpdate(float eclapse)
+        private void Awake()
         {
-            
+            mMovementComp = GetComponent<MovementComp>();
         }
 
-        public void OnFixedUpdate()
+        public void OnUpdate(float eclapse)
+        {
+        }
+
+        private void Update()
+        {
+            mMovementComp.OnUpdate(Time.deltaTime);
+        }
+
+        private void FixedUpdate()
+        {
+            mMovementComp.OnFixedUpdate(Time.fixedDeltaTime);
+        }
+
+        public void OnFixedUpdate(float eclapse)
         {
             
         }

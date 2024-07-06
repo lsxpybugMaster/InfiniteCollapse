@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.GameMain.Scripts.Models;
 
 namespace Assets.GameMain.Scripts.Architecture
 {
@@ -11,7 +12,7 @@ namespace Assets.GameMain.Scripts.Architecture
     {
         protected override void Init()
         {
-            
+            this.RegisterModel(new LooperModel());
         }
     }
 }

@@ -8,46 +8,63 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Assets.GameMain.Scripts.Character.Movement
 {
     public class MovementComp : MonoBehaviour, ILooper
     {
-        public float MaxVelocitySpeed;
+        public float MaxSpeed;
 
+        public float Acceleration;
+
+        public float curForwardSpeed;
+
+        public float NormalSpeed;
+        
         public Vector2 CurVelocity { get; private set; }
 
         private Vector3 mNormalVec;
         private BlackHole mBlackHole;
 
+
+        private InputManager mInputManager;
+
         private void Start()
         {
-            mBlackHole = GameObject.Find("BlackHole").GetComponent<BlackHole>();
+            mBlackHole = GameObject.FindGameObjectWithTag("BlackHole").GetComponent<BlackHole>();
+            mInputManager = InputManager.Instance;
         }
 
         public void OnUpdate(float eclapse)
         {
-            mNormalVec = transform.position - mBlackHole.transform.position;
-            mNormalVec.Normalize();
-
             if (InputManager.Instance.MovementInput.magnitude > 0.05f)
             {
-                var angle = Vector3.Angle(Vector2.up, mNormalVec);
-                var movement = InputManager.Instance.MovementInput;
-
-                var normalDir = mNormalVec * movement.y;
-                var tangentDir = Vector3.ProjectOnPlane(normalDir, Vector3.forward) * movement.x;
-
-                transform.position += (normalDir + tangentDir) * Time.deltaTime;
-
-                Debug.Log($"move update:  normal -- {mNormalVec}  movement: {normalDir + tangentDir}");
+                Move(eclapse);
             }
         }
 
-        public void OnFixedUpdate()
+        private void Move(float eclapse)
         {
-            throw new NotImplementedException();
+            mNormalVec = transform.position - mBlackHole.transform.position;
+            
+            var tangentDir = Vector3.Cross(mNormalVec, Vector3.forward);
+            var normalDir = mNormalVec.normalized * -mInputManager.MovementInput.x;
+
+            curForwardSpeed += mInputManager.MovementInput.y * Acceleration * eclapse;
+            curForwardSpeed = Mathf.Clamp(curForwardSpeed, 0f, MaxSpeed);
+            
+            var movement = tangentDir.normalized * curForwardSpeed + normalDir * NormalSpeed;
+            
+
+            Debug.DrawLine(transform.position, transform.position + tangentDir * curForwardSpeed, Color.red);
+            transform.Translate(movement * eclapse);
         }
 
+        public void OnFixedUpdate(float eclapse)
+        {
+            
+        }
+        
     }
 }
