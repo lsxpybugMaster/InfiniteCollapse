@@ -1,4 +1,4 @@
-﻿using Assets.GameMain.Scripts.Looper;
+using Assets.GameMain.Scripts.Looper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +14,7 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
 {
     public class BlackHole : ControllerBase
     {
+        [InfoBox("该数值乘以距离平方分之一")]
         public float AbsorbSpeed;
 
         public float OuterAccelerateRadius;
@@ -58,6 +59,5 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
         {
             
         }
-
     }
 }
