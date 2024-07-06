@@ -29,7 +29,7 @@ namespace Assets.GameMain.Scripts.Character.Player
         {
         }
 
-        private void Update()
+        /*private void Update()
         {
             mMovementComp.OnUpdate(Time.deltaTime);
         }
@@ -37,7 +37,7 @@ namespace Assets.GameMain.Scripts.Character.Player
         private void FixedUpdate()
         {
             mMovementComp.OnFixedUpdate(Time.fixedDeltaTime);
-        }
+        }*/
 
         public void OnFixedUpdate(float eclapse)
         {
@@ -47,6 +47,9 @@ namespace Assets.GameMain.Scripts.Character.Player
         public void OnDie()
         {
             OnPlayerDie?.Invoke(this);
+            Debug.Log("Die");
+            
+            Destroy(this, 1f);
         }
 
     }

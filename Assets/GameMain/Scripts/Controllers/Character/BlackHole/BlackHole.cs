@@ -25,8 +25,8 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
         {
             OuterAclColl = transform.Find("Outer").GetComponent<CircleCollider2D>();
             InnerAbsorbColl = transform.Find("Inner").GetComponent<CircleCollider2D>();
-            OuterAclColl.OnCollisionEnterEvent(onOuterCollision).UnRegisterWhenGameObjectDestroyed(this);
-            InnerAbsorbColl.OnCollisionEnterEvent(onInnerCollision).UnRegisterWhenGameObjectDestroyed(this);
+            OuterAclColl.OnTriggerEnter2DEvent(onOuterCollision).UnRegisterWhenGameObjectDestroyed(this);
+            InnerAbsorbColl.OnTriggerEnter2DEvent(onInnerCollision).UnRegisterWhenGameObjectDestroyed(this);
         }
 
         public float GetAbsorption(Vector2 position)
@@ -41,15 +41,16 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
         {
         }
 
-        private void onOuterCollision(Collision coll)
+        private void onOuterCollision(Collider2D coll)
         {
+            Debug.Log("Coll enter");
             if (coll.transform.TryGetComponent(out PlayerController player))
             {
                 player.OnDie();
             }
         }
         
-        private void onInnerCollision(Collision coll)
+        private void onInnerCollision(Collider2D coll)
         {
             
         }
