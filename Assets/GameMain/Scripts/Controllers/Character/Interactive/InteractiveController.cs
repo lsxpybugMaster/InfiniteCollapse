@@ -1,7 +1,9 @@
 ﻿using System;
+using Assets.GameMain.Scripts.Character.Player;
 using GameMain.Scripts.Controllers.UI.Counter;
 using QFramework;
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace GameMain.Scripts.Controllers.Character.Interactive
@@ -12,8 +14,15 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
     {
         protected Collider2D mColl;
 
+        [Title("Attribute")]
         public float InitSpeed;
         public float Mass;
+        [Space]
+        [WarnBeforeEditing("未填写", "必须填碰撞范围")]
+        public float InnerRadius;
+        [EnableIf("CanCounter")]
+        [WarnBeforeEditing("未填写", "可以填交互物范围")]
+        public float OuterRadius;
 
         [InfoBox("碰撞会减少玩家的速度值")]
         public float SpeedDownNumOnCollide;
@@ -29,15 +38,45 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
             mColl = GetComponent<Collider2D>();
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        public override void OnUpdate(float eclapse)
         {
-            if (other.TryGetComponent(out ControllerBase controller))
+            CheckCollision();
+        }
+
+
+        public virtual void OnInnerCollision(ControllerBase other)
+        {
+            if (other is PlayerController player)
             {
-                OnCollision(controller);
+                player.OnCollisionWithInteractive(controller =>
+                {
+                    controller.mMovementComp.DecreaseForwardSpeed(SpeedDownNumOnCollide);
+                });
             }
         }
 
-        public abstract void OnCollision(ControllerBase other);
+        private void CheckCollision()
+        {
+            if (CanCounter)
+            {
+                var outerColl = Physics2D.OverlapCircle(transform.position, OuterRadius);
+                if (outerColl != null && outerColl.TryGetComponent(out PlayerController player))
+                {
+                    OnOuterEnter(player);
+                }
+            }
+
+            var innerColl = Physics2D.OverlapCircle(transform.position, InnerRadius);
+            if (innerColl != null)
+            {
+                OnInnerCollision(innerColl.GetComponent<ControllerBase>());
+            }
+
+        }
         
+        public virtual void OnOuterEnter(PlayerController player)
+        {
+            
+        }
     }
 }
