@@ -14,12 +14,16 @@ namespace Assets.GameMain.Scripts.Logic.Input
 
         public Vector2 MovementInput { get; private set; }
 
+        public event Action OnCounterInput;
+
         public override void OnSingletonInit()
         {
             inputActions = new InputConfig();
 
             inputActions.Player.Movement.performed += ctx => MovementInput = ctx.ReadValue<Vector2>();
             inputActions.Player.Movement.canceled += ctx => MovementInput = Vector2.zero;
+
+            inputActions.Player.Interact.started += ctx => OnCounterInput?.Invoke();
 
             inputActions.Enable();
 

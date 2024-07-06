@@ -65,6 +65,10 @@ namespace Assets.GameMain.Scripts.Character.Movement
             var absorption = _mBlackHoleController.GetAbsorption(transform.position);
             return -mNormalVec * absorption;
         }
-        
+
+        public void DecreaseForwardSpeed(float descreament)
+        {
+            curForwardSpeed -= descreament;
+        }
     }
 }
