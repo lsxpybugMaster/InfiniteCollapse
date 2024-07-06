@@ -7,17 +7,21 @@ namespace GameMain.Scripts.Tools.Level_Manager
     public class StartConfigDrawer : MonoBehaviour
     {
         public StarConfig config;
-        public Transform originalSpeedTrans;
+        public Transform fromPoint;
         
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
-            Handles.Label(transform.position, $"{config.type.ToString()}: Appear Time {config.appearTime}" );
+            GUIStyle style = new GUIStyle();
+            style.normal.textColor = Color.white;
+            style.alignment = TextAnchor.MiddleCenter; // 设置文本居中对齐
+            
+            Handles.Label(fromPoint.position, $"{config.type.ToString()}: Appear Time {config.appearTime}", style);
         }
         
         private void OnDrawGizmosSelected()
         {
-            if (originalSpeedTrans == null)
+            if (fromPoint == null)
             {
                 return;
             }
@@ -25,8 +29,8 @@ namespace GameMain.Scripts.Tools.Level_Manager
             Gizmos.color = Color.red; // 设置箭头颜色为红色，可以根据需要调整颜色
 
             // 获取起点和终点的位置
-            Vector3 fromPosition = transform.position;
-            Vector3 toPosition = originalSpeedTrans.transform.position;
+            Vector3 fromPosition = fromPoint.transform.position;
+            Vector3 toPosition = transform.position;
 
             // 计算箭头的方向向量
             Vector3 direction = toPosition - fromPosition;

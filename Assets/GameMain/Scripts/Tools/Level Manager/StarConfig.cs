@@ -1,6 +1,7 @@
 ﻿using System;
 using GameMain.Scripts.Defination;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GameMain.Scripts.Tools.Level_Manager
 {
@@ -10,6 +11,8 @@ namespace GameMain.Scripts.Tools.Level_Manager
         public StarType type;
         public float appearTime;
         public Transform appearPosition;
-        public Transform originalSpeed;
+        public Transform velocityPoint;
+
+        public Vector2 OriginalSpeed => velocityPoint.position - appearPosition.position;
     }
 }
