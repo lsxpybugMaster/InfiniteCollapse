@@ -5,6 +5,7 @@ using System.Linq;
 using Assets.GameMain.Scripts.Architecture;
 using Assets.GameMain.Scripts.Logic.Input;
 using Assets.GameMain.Scripts.Models;
+using GameMain.Scripts.Controllers;
 using GameMain.Scripts.Utility;
 using UnityEngine;
 
@@ -12,12 +13,16 @@ namespace GameMain.Scripts.Game
 {
     public class InfiniteCollapseGame : GameBase, IController
     {
-        public List<ILooper> Loopers;
+        public List<ILooper> Loopers = new List<ILooper>();
         
         public override void Initialize()
         {
+            var levelManager = Object.FindObjectOfType<LevelManager>();
+            
             var blackHole = Resources.Load<GameObject>(PathManager.GetEntityAsset("BlackHole")).Instantiate();
             var player = Resources.Load<GameObject>(PathManager.GetEntityAsset("Player")).Instantiate();
+
+            player.Position(levelManager.GetStartPoint());
 
             Loopers.Add(blackHole.GetComponent<ILooper>());
             Loopers.Add(player.GetComponent<ILooper>());
