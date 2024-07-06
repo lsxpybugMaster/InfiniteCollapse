@@ -25,7 +25,7 @@ namespace Assets.GameMain.Scripts.Character.Player
             mMovementComp = GetComponent<MovementComp>();
         }
 
-        public void OnUpdate(float eclapse)
+        public override void OnUpdate(float eclapse)
         {
         }
 
@@ -39,7 +39,7 @@ namespace Assets.GameMain.Scripts.Character.Player
             mMovementComp.OnFixedUpdate(Time.fixedDeltaTime);
         }
 
-        public void OnFixedUpdate(float eclapse)
+        public override void OnFixedUpdate(float eclapse)
         {
             
         }

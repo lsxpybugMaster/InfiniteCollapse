@@ -37,7 +37,7 @@ namespace Assets.GameMain.Scripts.Character.Movement
             mInputManager = InputManager.Instance;
         }
 
-        public void OnUpdate(float eclapse)
+        public override void OnUpdate(float eclapse)
         {
             Move(eclapse);
         }
@@ -65,7 +65,7 @@ namespace Assets.GameMain.Scripts.Character.Movement
             return -mNormalVec * absorption;
         }
 
-        public void OnFixedUpdate(float eclapse)
+        public override void OnFixedUpdate(float eclapse)
         {
             
         }

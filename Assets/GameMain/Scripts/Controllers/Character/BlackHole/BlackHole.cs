@@ -35,7 +35,7 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
             return AbsorbSpeed / (dis * dis);
         }
 
-        public void OnUpdate(float eclapse)
+        public override void OnUpdate(float eclapse)
         {
         }
 
@@ -54,7 +54,7 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
         }
         
 
-        public void OnFixedUpdate(float eclapse)
+        public override void OnFixedUpdate(float eclapse)
         {
             
         }
