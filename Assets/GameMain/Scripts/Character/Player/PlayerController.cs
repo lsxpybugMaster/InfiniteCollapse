@@ -53,6 +53,10 @@ namespace Assets.GameMain.Scripts.Character.Player
         public void OnDie()
         {
             OnPlayerDie?.Invoke(this);
+            
+            Debug.Log("dir");
+            
+            Destroy(this, 1f);
         }
     }
 }
