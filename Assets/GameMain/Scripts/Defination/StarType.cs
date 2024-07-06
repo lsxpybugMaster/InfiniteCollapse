@@ -4,6 +4,7 @@
     {
         Debris,
         Stellar,
-        Satellite
+        Satellite,
+        Meteor
     }
 }

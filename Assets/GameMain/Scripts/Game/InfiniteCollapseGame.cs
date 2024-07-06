@@ -26,6 +26,7 @@ namespace GameMain.Scripts.Game
 
             Loopers.Add(blackHole.GetComponent<ILooper>());
             Loopers.Add(player.GetComponent<ILooper>());
+            Loopers.Add(levelManager);
 
             Loopers.ForEach(x => x.OnGameInit());
         }

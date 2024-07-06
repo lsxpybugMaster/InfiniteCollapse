@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1585591224231553768}
   - component: {fileID: 3654337699139662090}
   m_Layer: 0
-  m_Name: Obstacle
+  m_Name: Debris
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,7 +102,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -122,6 +122,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InitSpeed: 5
   Mass: 5
+  InnerRadius: 0
+  OuterRadius: 0
   SpeedDownNumOnCollide: 3
   CanCounter: 0
 --- !u!58 &3654337699139662090
