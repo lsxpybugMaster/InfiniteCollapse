@@ -16,19 +16,21 @@ namespace Assets.GameMain.Scripts.Character.Player
     {
         private BlackHole mBlackHole;
 
-        private MovementComp mMovementComp;
+        public MovementComp mMovementComp { get; private set; }
 
+        public Action<PlayerController> OnPlayerDie;
 
         private void Awake()
         {
             mMovementComp = GetComponent<MovementComp>();
         }
 
-        public void OnUpdate(float eclapse)
+        public override void OnUpdate(float eclapse)
         {
+            mMovementComp.OnUpdate(eclapse);
         }
 
-        private void Update()
+        /*private void Update()
         {
             mMovementComp.OnUpdate(Time.deltaTime);
         }
@@ -36,12 +38,24 @@ namespace Assets.GameMain.Scripts.Character.Player
         private void FixedUpdate()
         {
             mMovementComp.OnFixedUpdate(Time.fixedDeltaTime);
-        }
+        }*/
 
-        public void OnFixedUpdate(float eclapse)
+        public override void OnFixedUpdate(float eclapse)
         {
             
         }
 
+        public void OnDie()
+        {
+            OnPlayerDie?.Invoke(this);
+            Debug.Log("Die");
+            
+            Destroy(gameObject, 1f);
+        }
+
+        public void OnCollisionWithInteractive(Action<PlayerController> action)
+        {
+            action?.Invoke(this);
+        }
     }
 }
