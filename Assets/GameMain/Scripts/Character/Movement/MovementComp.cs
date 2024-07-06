@@ -25,28 +25,25 @@ namespace Assets.GameMain.Scripts.Character.Movement
         public Vector2 CurVelocity { get; private set; }
 
         private Vector3 mNormalVec;
-        private BlackHole mBlackHole;
+        private BlackHoleController _mBlackHoleController;
 
 
         private InputManager mInputManager;
 
         private void Start()
         {
-            mBlackHole = GameObject.FindGameObjectWithTag("BlackHole").GetComponent<BlackHole>();
+            _mBlackHoleController = GameObject.FindGameObjectWithTag("BlackHole").GetComponent<BlackHoleController>();
             mInputManager = InputManager.Instance;
         }
 
         public void OnUpdate(float eclapse)
         {
-            if (InputManager.Instance.MovementInput.magnitude > 0.05f)
-            {
-                Move(eclapse);
-            }
+            Move(eclapse);
         }
 
         private void Move(float eclapse)
         {
-            mNormalVec = transform.position - mBlackHole.transform.position;
+            mNormalVec = transform.position - _mBlackHoleController.transform.position;
             
             var tangentDir = Vector3.Cross(mNormalVec, Vector3.forward);
             var normalDir = mNormalVec.normalized * -mInputManager.MovementInput.x;
@@ -54,11 +51,17 @@ namespace Assets.GameMain.Scripts.Character.Movement
             curForwardSpeed += mInputManager.MovementInput.y * Acceleration * eclapse;
             curForwardSpeed = Mathf.Clamp(curForwardSpeed, 0f, MaxSpeed);
             
-            var movement = tangentDir.normalized * curForwardSpeed + normalDir * NormalSpeed;
+            var movement = tangentDir.normalized * curForwardSpeed + normalDir * NormalSpeed + GetAbsorption();
             
 
             Debug.DrawLine(transform.position, transform.position + tangentDir * curForwardSpeed, Color.red);
             transform.Translate(movement * eclapse);
+        }
+
+        private Vector3 GetAbsorption()
+        {
+            var absorption = _mBlackHoleController.GetAbsorption(transform.position);
+            return -mNormalVec * absorption;
         }
 
         public void OnFixedUpdate(float eclapse)

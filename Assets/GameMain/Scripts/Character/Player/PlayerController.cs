@@ -7,15 +7,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameMain.Scripts.Character.Base;
 using UnityEngine;
 
 namespace Assets.GameMain.Scripts.Character.Player
 {
-    public class PlayerController : MonoBehaviour, ILooper
+    public class PlayerController : MonoBehaviour, ILooper, ICreator
     {
-        private BlackHole mBlackHole;
+        private BlackHoleController _mBlackHoleController;
 
         private MovementComp mMovementComp;
+
+        public Action<PlayerController> OnPlayerDie;
 
 
         private void Awake()
@@ -42,5 +45,14 @@ namespace Assets.GameMain.Scripts.Character.Player
             
         }
 
+        public void Init(Action<ICreator> initAction)
+        {
+            initAction?.Invoke(this);
+        }
+
+        public void OnDie()
+        {
+            OnPlayerDie?.Invoke(this);
+        }
     }
 }

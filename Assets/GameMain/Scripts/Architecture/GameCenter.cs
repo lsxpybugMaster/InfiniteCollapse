@@ -12,6 +12,7 @@ namespace Assets.GameMain.Scripts.Architecture
     {
         protected override void Init()
         {
+            this.RegisterModel(new PlayerModel());
             this.RegisterModel(new LooperModel());
         }
     }
