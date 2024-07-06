@@ -34,10 +34,7 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
             var dis = Vector2.Distance(transform.position, position);
             return AbsorbSpeed / (dis * dis);
         }
-
-        public void OnUpdate(float eclapse)
-        {
-        }
+        
 
         private void onOuterCollision(Collider2D coll)
         {
@@ -49,12 +46,6 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
         }
         
         private void onInnerCollision(Collider2D coll)
-        {
-            
-        }
-        
-
-        public void OnFixedUpdate(float eclapse)
         {
             
         }

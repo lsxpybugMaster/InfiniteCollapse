@@ -20,6 +20,7 @@ namespace Assets.GameMain.Scripts.Character.Movement
         public float Acceleration;
 
         public float curForwardSpeed;
+        public float curNormalSpeed;
 
         public float NormalSpeed;
         
@@ -37,7 +38,7 @@ namespace Assets.GameMain.Scripts.Character.Movement
             mInputManager = InputManager.Instance;
         }
 
-        public void OnUpdate(float eclapse)
+        public override void OnUpdate(float eclapse)
         {
             Move(eclapse);
         }
@@ -63,11 +64,6 @@ namespace Assets.GameMain.Scripts.Character.Movement
         {
             var absorption = _mBlackHoleController.GetAbsorption(transform.position);
             return -mNormalVec * absorption;
-        }
-
-        public void OnFixedUpdate(float eclapse)
-        {
-            
         }
         
     }
