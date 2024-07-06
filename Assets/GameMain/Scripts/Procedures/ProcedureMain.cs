@@ -146,7 +146,7 @@ namespace GameMain.Scripts.Procedure
     
     public class MainState : AbstractState<ProcedureStates, ProcedureMain>
     {
-        private GameBase game = new GameLoopMain();
+        private GameBase game = new InfiniteCollapse();
         
         public MainState(FSM<ProcedureStates> fsm, ProcedureMain target) : base(fsm, target)
         {
