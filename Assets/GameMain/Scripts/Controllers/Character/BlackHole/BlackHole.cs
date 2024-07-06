@@ -8,13 +8,13 @@ using Assets.GameMain.Scripts.Character.Player;
 using GameMain.Scripts.Character.Base;
 using QFramework;
 using Sirenix.OdinInspector;
+using GameMain.Scripts.Controllers;
 using UnityEngine;
 
 namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
 {
-    public class BlackHoleController : MonoBehaviour, ILooper, ICreator
+    public class BlackHole : ControllerBase
     {
-        [InfoBox("该数值乘以距离平方分之一")]
         public float AbsorbSpeed;
 
         public float OuterAccelerateRadius;
@@ -54,9 +54,5 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
             
         }
 
-        public void Init(Action<ICreator> initAction)
-        {
-            initAction?.Invoke(this);
-        }
     }
 }

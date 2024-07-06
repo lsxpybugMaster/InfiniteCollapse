@@ -16,6 +16,8 @@ namespace GameMain.Scripts.Game
         
         public override void Initialize()
         {
+            // var startPoint = Object.FindObjectOfType<>()
+            
             var blackHole = Resources.Load<GameObject>(PathManager.GetEntityAsset("BlackHole")).Instantiate();
             var player = Resources.Load<GameObject>(PathManager.GetEntityAsset("Player")).Instantiate();
 
