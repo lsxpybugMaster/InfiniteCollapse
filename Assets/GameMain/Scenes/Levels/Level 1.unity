@@ -140,7 +140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8243692152689225083, guid: c535cd80c095db64e878326dd9425257, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8243692152689225083, guid: c535cd80c095db64e878326dd9425257, type: 3}
       propertyPath: m_LocalPosition.x
@@ -278,6 +278,42 @@ PrefabInstance:
     - target: {fileID: 2315825760792818816, guid: 059df8ea5a72a2249ac55e4413ed11a8, type: 3}
       propertyPath: m_Name
       value: LevelManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3977945579832594005, guid: 059df8ea5a72a2249ac55e4413ed11a8, type: 3}
+      propertyPath: starConfigs.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3977945579832594005, guid: 059df8ea5a72a2249ac55e4413ed11a8, type: 3}
+      propertyPath: startConfigs.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3977945579832594005, guid: 059df8ea5a72a2249ac55e4413ed11a8, type: 3}
+      propertyPath: starConfigs.Array.data[0].velocityPoint
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3977945579832594005, guid: 059df8ea5a72a2249ac55e4413ed11a8, type: 3}
+      propertyPath: starConfigs.Array.data[0].appearPosition
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3977945579832594005, guid: 059df8ea5a72a2249ac55e4413ed11a8, type: 3}
+      propertyPath: startConfigs.Array.data[0].originalSpeed
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3977945579832594005, guid: 059df8ea5a72a2249ac55e4413ed11a8, type: 3}
+      propertyPath: startConfigs.Array.data[0].velocityPoint
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3977945579832594005, guid: 059df8ea5a72a2249ac55e4413ed11a8, type: 3}
+      propertyPath: startConfigs.Array.data[1].originalSpeed
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3977945579832594005, guid: 059df8ea5a72a2249ac55e4413ed11a8, type: 3}
+      propertyPath: startConfigs.Array.data[0].appearPosition
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3977945579832594005, guid: 059df8ea5a72a2249ac55e4413ed11a8, type: 3}
+      propertyPath: startConfigs.Array.data[1].appearPosition
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4016344726501253400, guid: 059df8ea5a72a2249ac55e4413ed11a8, type: 3}
       propertyPath: m_RootOrder
