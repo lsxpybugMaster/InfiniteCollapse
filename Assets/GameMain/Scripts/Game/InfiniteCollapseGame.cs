@@ -5,22 +5,22 @@ using System.Linq;
 using Assets.GameMain.Scripts.Architecture;
 using Assets.GameMain.Scripts.Logic.Input;
 using Assets.GameMain.Scripts.Models;
+using GameMain.Scripts.Utility;
 using UnityEngine;
 
 namespace GameMain.Scripts.Game
 {
-    public class InfiniteCollapse : GameBase, IController
+    public class InfiniteCollapseGame : GameBase, IController
     {
         public List<ILooper> Loopers;
-        private LooperModel _looperModel;
         
         public override void Initialize()
         {
-            _looperModel = this.GetModel<LooperModel>();
+            var blackHole = Resources.Load<GameObject>(PathManager.GetEntityAsset("BlackHole")).Instantiate();
+            var player = Resources.Load<GameObject>(PathManager.GetEntityAsset("Player")).Instantiate();
 
-            var gos = _looperModel.Loopers;
-            gos.ForEach(x => x.Instantiate());
-            Loopers = gos.Select(x => x.GetComponent<ILooper>()).ToList();
+            Loopers.Add(blackHole.GetComponent<ILooper>());
+            Loopers.Add(player.GetComponent<ILooper>());
         }
 
         public override void Update(float elapse)
@@ -30,7 +30,7 @@ namespace GameMain.Scripts.Game
 
         public override void FixedUpdate(float elapse)
         {
-            base.FixedUpdate(elapse);
+            Loopers.ForEach(x => x.OnFixedUpdate(elapse));
         }
 
         public IArchitecture GetArchitecture()
