@@ -58,7 +58,7 @@ namespace GameMain.Scripts.Procedure
             UIKit.Root.SetResolution(1920, 1080, 0.5f);
             
             ChangeSceneState.nextState = ProcedureStates.Menu;
-            ChangeSceneState.nextSceneName = "Menu";
+            ChangeSceneState.nextScenePath = PathManager.GetSceneAsset("Menu");
             mFSM.ChangeState(ProcedureStates.ChangeScene);
 
             var savePath = Application.persistentDataPath + "/Save";
@@ -72,7 +72,7 @@ namespace GameMain.Scripts.Procedure
     public class ChangeSceneState : AbstractState<ProcedureStates, ProcedureMain>
     {
         public static ProcedureStates nextState = ProcedureStates.None;
-        public static string nextSceneName = "";
+        public static string nextScenePath = "";
         
         private AsyncOperation asyncOperation;
         private SceneChangePanel panel;
@@ -93,7 +93,7 @@ namespace GameMain.Scripts.Procedure
             }
             panel.FadeOut(() =>
             {
-                asyncOperation = SceneManager.LoadSceneAsync(PathManager.GetSceneAsset(nextSceneName));
+                asyncOperation = SceneManager.LoadSceneAsync(nextScenePath);
             });
         }
 
@@ -122,12 +122,18 @@ namespace GameMain.Scripts.Procedure
             base.OnEnter();
 
             panel = UIKit.OpenPanel<MenuPanel>();
-            panel.startGameBtn.onClick.AddListener(() =>
+
+            for (var i = 0; i < panel.levelSelectBtns.Count; i++)
             {
-                ChangeSceneState.nextState = ProcedureStates.Main;
-                ChangeSceneState.nextSceneName = "Main";
-                mFSM.ChangeState(ProcedureStates.ChangeScene);
-            });
+                var btn = panel.levelSelectBtns[i];
+                var nextSceneName = $"Level {i + 1}";
+                btn.onClick.AddListener(() =>
+                {
+                    ChangeSceneState.nextState = ProcedureStates.Main;
+                    ChangeSceneState.nextScenePath = PathManager.GetLevelAsset(nextSceneName);
+                    mFSM.ChangeState(ProcedureStates.ChangeScene);
+                });
+            }
         }
 
         protected override void OnExit()
