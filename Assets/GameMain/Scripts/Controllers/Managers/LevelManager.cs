@@ -16,9 +16,10 @@ namespace GameMain.Scripts.Controllers
         [TitleGroup("Stars")] 
         public Transform starsHolder;
         
-        [ListDrawerSettings(CustomAddFunction = "ConfigAddFunc")]
-        public List<StarConfig> startConfigs = new List<StarConfig>();
-
+        [ListDrawerSettings(CustomAddFunction = "ConfigAddFunc", CustomRemoveIndexFunction = "ConfigRemoveFunc")]
+        public List<StarConfig> starConfigs = new List<StarConfig>();
+        
+#if UNITY_EDITOR
         public Vector2 GetStartPoint()
         {
             return startPoint.position;
@@ -31,16 +32,28 @@ namespace GameMain.Scripts.Controllers
             var ap = new GameObject("Appear Position").transform;
             ap.Parent(starsHolder);
 
-            var os = new GameObject("Original Speed").transform;
-            os.Parent(ap);
+            var vp = new GameObject("Velocity Point").transform;
+            vp.Parent(ap);
 
-            var drawer = ap.gameObject.AddComponent<StartConfigDrawer>();
+            var drawer = vp.gameObject.AddComponent<StartConfigDrawer>();
             drawer.config = sc;
+            drawer.fromPoint = ap;
             
             sc.appearPosition = ap;
-            sc.originalSpeed = os;
+            sc.velocityPoint = vp;
 
             return sc;
         }
+        
+        private void ConfigRemoveFunc(int index)
+        {
+            var config = starConfigs[index];
+            
+            DestroyImmediate(config.velocityPoint.gameObject);
+            DestroyImmediate(config.appearPosition.gameObject);
+            
+            starConfigs.RemoveAt(index);
+        }  
+#endif
     }
 }
