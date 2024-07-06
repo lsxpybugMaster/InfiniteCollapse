@@ -107,6 +107,13 @@ namespace GameMain.Scripts.Procedure
                 mFSM.ChangeState(nextState);
             }
         }
+
+        protected override void OnExit()
+        {
+            base.OnExit();
+
+            nextScenePath = "";
+        }
     } 
     
     public class MenuState : AbstractState<ProcedureStates, ProcedureMain>
@@ -146,7 +153,7 @@ namespace GameMain.Scripts.Procedure
     
     public class MainState : AbstractState<ProcedureStates, ProcedureMain>
     {
-        private GameBase game = new InfiniteCollapse();
+        private GameBase game = new InfiniteCollapseGame();
         
         public MainState(FSM<ProcedureStates> fsm, ProcedureMain target) : base(fsm, target)
         {

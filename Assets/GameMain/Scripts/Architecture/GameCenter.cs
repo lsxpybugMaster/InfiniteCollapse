@@ -12,7 +12,7 @@ namespace Assets.GameMain.Scripts.Architecture
     {
         protected override void Init()
         {
-            this.RegisterModel(new LooperModel());
+            // this.RegisterModel(new LooperModel());
         }
     }
 }
