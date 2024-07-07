@@ -10,6 +10,7 @@ using QFramework;
 using Sirenix.OdinInspector;
 using GameMain.Scripts.Controllers;
 using GameMain.Scripts.Controllers.Character.Interactive;
+using GameMain.Scripts.Events;
 using UnityEngine;
 
 namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
@@ -22,6 +23,15 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
 
 
         public float AbsorbMultiplier { get; private set; } = 1f;
+
+        public override void OnGameInit()
+        {
+            base.OnGameInit();
+            this.RegisterEvent<OutBoundryFailEvent>(ctx =>
+            {
+
+            });
+        }
 
         public float GetAbsorption(Vector2 position)
         {

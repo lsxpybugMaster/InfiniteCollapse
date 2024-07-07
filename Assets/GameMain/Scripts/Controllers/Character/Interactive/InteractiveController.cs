@@ -143,8 +143,11 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
         public virtual void OnOuterEnter(PlayerController player)
         {
             mCounterPlayer = player;
-           
-            UIKit.OpenPanel<CounterPanel>(new CounterPanelData(onCounterSuccess));
+
+            var panel = UIKit.OpenPanel<CounterPanel>(new CounterPanelData(onCounterSuccess));
+            panel.Parent(transform);
+            panel.transform.localScale = new Vector3(OuterRadius, OuterRadius, 0f);
+
             //Debug.Log("tIMW FRR");
             //EffectController.Instance.timescaleEffect();
         }
