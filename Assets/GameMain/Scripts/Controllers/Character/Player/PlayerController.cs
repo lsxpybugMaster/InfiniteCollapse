@@ -15,6 +15,7 @@ namespace Assets.GameMain.Scripts.Character.Player
     public class PlayerController : ControllerBase
     {
         private BlackHole mBlackHole;
+        private CircleHud mCircleHud;
 
         public MovementComp mMovementComp { get; private set; }
 
@@ -25,9 +26,17 @@ namespace Assets.GameMain.Scripts.Character.Player
             mMovementComp = GetComponent<MovementComp>();
         }
 
+        private void Start()
+        {
+            mBlackHole = GameObject.FindGameObjectWithTag("BlackHole").GetComponent<BlackHole>();
+            mCircleHud = mBlackHole.GetComponentInChildren<CircleHud>();
+        }
+
         public override void OnUpdate(float eclapse)
         {
             mMovementComp.OnUpdate(eclapse);
+            
+            UpdateCircle();
         }
         
 
@@ -50,11 +59,10 @@ namespace Assets.GameMain.Scripts.Character.Player
         }
 
 
-        public Sprite circleHud;
-
         private void UpdateCircle()
         {
-            
+            var dis = Vector3.Distance(transform.position, mBlackHole.transform.position);
+            mCircleHud.transform.localScale = new Vector3(dis, dis, 1);
         }
     }
 }
