@@ -2,6 +2,7 @@
 using Assets.GameMain.Scripts.Character.Player;
 using Assets.GameMain.Scripts.Logic.Input;
 using GameMain.Scripts.Controllers.UI.Counter;
+using GameMain.Scripts.UI;
 using GameMain.Scripts.Utility;
 using QFramework;
 using Sirenix.OdinInspector;
@@ -93,7 +94,12 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
         { 
             //CheckCollision();
 
-            
+            if (qte != null)
+            {
+                var radius = Vector3.Distance(transform.position, mCounterPlayer.transform.position);
+                radius = radius * 0.32f / 3f;
+                qte.transform.localScale = new Vector3(radius, radius, 1);
+            }
         }
 
         private void Update()
@@ -106,6 +112,7 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
             }
         }
 
+        private GameObject hitPrefab;
         public virtual void OnInnerCollision(ControllerBase other)
         {
             if (other is PlayerController player)
@@ -114,6 +121,12 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
                 {
                     controller.mMovementComp.DecreaseForwardSpeed(SpeedDownNumOnCollide);
                 });
+                
+                hitPrefab = Resources.Load<GameObject>(PathManager.GetEntityAsset("PlayerHit")).Instantiate();
+                hitPrefab.Parent(transform);
+                hitPrefab.transform.localPosition = new Vector3(0, 0, 0);
+                
+                Destroy(gameObject, 0.1f);
             }
         }
 
@@ -161,9 +174,11 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
         {
             mCounterPlayer = player;
 
-            var panel = UIKit.OpenPanel<CounterPanel>(new CounterPanelData(onCounterSuccess));
+            /*var panel = UIKit.OpenPanel<CounterPanel>(new CounterPanelData(onCounterSuccess));
             panel.Parent(transform);
-            panel.transform.localScale = new Vector3(OuterRadius, OuterRadius, 1f);
+            panel.transform.localScale = new Vector3(OuterRadius, OuterRadius, 1f);*/
+            
+            _counterObj = new CounterObj(onCounterSuccess);
 
             qte = Resources.Load<GameObject>(PathManager.GetEntityAsset("QTE")).Instantiate();
             qte.Parent(transform);
@@ -174,15 +189,19 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
             //EffectController.Instance.timescaleEffect();
         }
 
+        private CounterObj _counterObj;
+        
         private void OnOuterExit()
         {
             mCounterPlayer = null;
-            UIKit.ClosePanel<CounterPanel>();
+            //UIKit.ClosePanel<CounterPanel>();
+            _counterObj?.Dispose();
             
             Destroy(qte);
             qte = null;
         }
 
+        private GameObject counterSuccessPrefab;
         protected virtual void OnCounterSuccess()
         {
             if (qte != null)
@@ -190,6 +209,14 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
                 Destroy(qte);
                 qte = null;
             }
+
+            if (counterSuccessPrefab != null)
+            {
+                counterSuccessPrefab = Resources.Load<GameObject>(PathManager.GetEntityAsset("QTESuccess")).Instantiate();
+                counterSuccessPrefab.Parent(transform);
+                counterSuccessPrefab.transform.localPosition = new Vector3(0, 0, 0);
+            }
+            
             EffectManager.Instance.screenLowEffect();
         }
     }

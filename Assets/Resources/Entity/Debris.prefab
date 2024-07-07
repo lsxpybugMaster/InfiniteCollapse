@@ -73,7 +73,7 @@ MonoBehaviour:
   InnerRadius: 0.63
   OuterRadius: 1.3
   SpeedDownNumOnCollide: 1.5
-  CanCounter: 1
+  CanCounter: 0
 --- !u!58 &3654337699139662090
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -163,7 +163,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9cf3ede895c44a04e915262864a3628d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 02dba6b2b0574ae4ab6cf08e40318893, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
