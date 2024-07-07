@@ -7,7 +7,6 @@ namespace Assets.GameMain.Scripts.Models
     {
         public float escapeRadius;
         public float escapeSpeed;
-        public float contrastSpeed;
         
         protected override void OnInit()
         {
@@ -18,7 +17,6 @@ namespace Assets.GameMain.Scripts.Models
         {
             escapeRadius = levelManager.escapeRadius;
             escapeSpeed = levelManager.escapeSpeed;
-            contrastSpeed = levelManager.contrastSpeed;
         }
     }
 }

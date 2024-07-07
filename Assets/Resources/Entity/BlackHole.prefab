@@ -106,6 +106,8 @@ MonoBehaviour:
   CanCounter: 1
   AbsorbSpeed: 5
   OuterAccelerateRadius: 10
+  OutBoundrySpeed: 100
+  OutBoundryAbsorbTime: 0.2
 --- !u!50 &5767774270086761884
 Rigidbody2D:
   serializedVersion: 4
@@ -114,7 +116,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2210173052977991395}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
