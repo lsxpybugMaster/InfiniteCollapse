@@ -135,13 +135,13 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
 
         public virtual void OnOuterEnter(PlayerController player)
         {
-            mCounterPlayer = player;
+            mCounterPlayer = player;         
             UIKit.OpenPanel<CounterPanel>(new CounterPanelData(onCounterSuccess));
         }
 
         private void OnOuterExit()
         {
-            mCounterPlayer = null;
+            mCounterPlayer = null;                  
             UIKit.ClosePanel<CounterPanel>();
         }
 
