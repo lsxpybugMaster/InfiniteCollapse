@@ -5,6 +5,7 @@ using Assets.GameMain.Scripts.Character.Movement;
 using Assets.GameMain.Scripts.Looper;
 using Assets.GameMain.Scripts.Models;
 using GameMain.Scripts.Commands;
+using GameMain.Scripts.Events;
 using GameMain.Scripts.Tools.Level_Manager;
 using GameMain.Scripts.Utility;
 using QFramework;
@@ -44,14 +45,20 @@ namespace GameMain.Scripts.Controllers
         {
             this.entityList = entityList;
             
-            blackHole = Resources.Load<GameObject>(PathManager.GetEntityAsset("BlackHole")).Instantiate();
+            blackHole = Resources.Load<GameObject>(PathManager.GetEntityAsset("BlackHole"))
+                .Instantiate()
+                .Name("BlackHole");
             
-            player = Resources.Load<GameObject>(PathManager.GetEntityAsset("Player")).Instantiate();
+            player = Resources.Load<GameObject>(PathManager.GetEntityAsset("Player"))
+                .Instantiate()
+                .Name("Player");
             movementComp = player.GetComponent<MovementComp>();
             player.Position(GetStartPoint());
             this.GetModel<PlayerModel>().RegisterPlayer(player.transform);
             
-            frontier = Resources.Load<GameObject>(PathManager.GetEntityAsset("Frontier")).Instantiate();
+            frontier = Resources.Load<GameObject>(PathManager.GetEntityAsset("Frontier"))
+                .Instantiate()
+                .Name("Frontier");
             frontier.LocalScale(escapeRadius, escapeRadius, escapeRadius);
             
             starWaitList.AddRange(starConfigs);
@@ -60,6 +67,7 @@ namespace GameMain.Scripts.Controllers
             
             entityList.Add(blackHole.GetComponent<ILooper>());
             entityList.Add(player.GetComponent<ILooper>());
+            entityList.Add(movementComp);
         }
         
         public override void OnGameInit()
@@ -111,7 +119,7 @@ namespace GameMain.Scripts.Controllers
             {
                 if (movementComp.CurSpeed >= escapeSpeed)
                 {
-                    Debug.Log("Success");
+                    this.SendCommand<PlayerEscapeCommand>();
                 }
                 else
                 {

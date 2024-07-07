@@ -21,7 +21,7 @@ namespace GameMain.Scripts.Utility
         
         public static string GetManagerAsset(string assetName)
         {
-            return $"Manager/{assetName}";
+            return $"Managers/{assetName}";
         }
 
         public static string GetUIAsset(string assetName)

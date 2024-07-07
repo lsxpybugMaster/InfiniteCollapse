@@ -45,14 +45,6 @@ namespace Assets.GameMain.Scripts.Character.Player
             
         }
 
-        public void OnDie()
-        {
-            OnPlayerDie?.Invoke(this);
-            Debug.Log("Die");
-            
-            Destroy(gameObject, 1f);
-        }
-
         public void OnCollisionWithInteractive(Action<PlayerController> action)
         {
             action?.Invoke(this);

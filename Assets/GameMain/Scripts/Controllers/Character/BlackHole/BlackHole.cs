@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.GameMain.Scripts.Character.Player;
+using GameMain.Scripts.Commands;
 //using GameMain.Scripts.Character.Base;
 using QFramework;
 using Sirenix.OdinInspector;
@@ -34,7 +35,7 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
             this.RegisterEvent<PlayerFail2EscapeEvent>(ctx =>
             {
                 StartCoroutine(SetOutBoundryAbosorb());
-            });
+            }).UnRegisterWhenGameObjectDestroyed(this);
         }
 
         private float preserveAbosorbSpeed;
@@ -69,8 +70,15 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
             var player = other as PlayerController;
             if (player != null)
             {
-                player.OnDie();
+                this.SendCommand<PlayerDieCommand>();
             }
+        }
+
+        public override void OnGameShutdown()
+        {
+            base.OnGameShutdown();
+            
+            StopAllCoroutines();
         }
     }
 }

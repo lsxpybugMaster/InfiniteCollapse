@@ -171,6 +171,13 @@ namespace GameMain.Scripts.Procedure
             base.OnUpdate();
             
             game.Update(Time.deltaTime);
+
+            if (game.GameOver)
+            {
+                ChangeSceneState.nextState = ProcedureStates.Menu;
+                ChangeSceneState.nextScenePath = PathManager.GetSceneAsset("Menu");
+                mFSM.ChangeState(ProcedureStates.ChangeScene);
+            }
         }
 
         protected override void OnFixedUpdate()
