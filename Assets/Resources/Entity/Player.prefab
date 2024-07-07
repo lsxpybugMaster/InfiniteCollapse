@@ -90,8 +90,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMovementComp: {fileID: 7887991524622359097}
-  maxAmount: 1
-  maxSpeed: 30
+  maxAmount: 0.65
+  maxSpeed: 10
   speed: 0
 --- !u!1 &4417886788893368718
 GameObject:
