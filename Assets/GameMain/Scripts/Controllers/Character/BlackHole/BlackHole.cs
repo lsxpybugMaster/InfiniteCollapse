@@ -31,7 +31,7 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
         public override void OnGameInit()
         {
             base.OnGameInit();
-            this.RegisterEvent<OutBoundryFailEvent>(ctx =>
+            this.RegisterEvent<PlayerFail2EscapeEvent>(ctx =>
             {
                 StartCoroutine(SetOutBoundryAbosorb());
             });
