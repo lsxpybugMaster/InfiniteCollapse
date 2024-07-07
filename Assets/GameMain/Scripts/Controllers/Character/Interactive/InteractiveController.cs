@@ -163,7 +163,7 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
         protected virtual void OnCounterSuccess()
         {
            
-            EffectController.Instance.screenLowEffect();
+            EffectManager.Instance.screenLowEffect();
         }
     }
 }

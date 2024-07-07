@@ -29,7 +29,7 @@ namespace GameMain.Scripts.Controllers
         [ListDrawerSettings(CustomAddFunction = "ConfigAddFunc", CustomRemoveIndexFunction = "ConfigRemoveFunc")]
         public List<StarConfig> starConfigs = new ();
 
-        private List<ILooper> mainLoop;
+        private List<ILooper> entityList;
         
         private GameObject player;
         private MovementComp movementComp;
@@ -40,9 +40,9 @@ namespace GameMain.Scripts.Controllers
         private List<StarConfig> starWaitList = new ();
         private float gameTime = 0f;
 
-        public void InitLevel(List<ILooper> gameLoop)
+        public void InitLevel(List<ILooper> entityList)
         {
-            mainLoop = gameLoop;
+            this.entityList = entityList;
             
             blackHole = Resources.Load<GameObject>(PathManager.GetEntityAsset("BlackHole")).Instantiate();
             
@@ -58,8 +58,8 @@ namespace GameMain.Scripts.Controllers
             
             this.GetModel<LevelModel>().RegisterLevel(this);
             
-            mainLoop.Add(blackHole.GetComponent<ILooper>());
-            mainLoop.Add(player.GetComponent<ILooper>());
+            entityList.Add(blackHole.GetComponent<ILooper>());
+            entityList.Add(player.GetComponent<ILooper>());
         }
         
         public override void OnGameInit()
@@ -91,6 +91,7 @@ namespace GameMain.Scripts.Controllers
                     var star = Resources.Load<GameObject>(PathManager.GetEntityAsset(config.type.ToString()))
                         .Instantiate(config.AppearPosition, Quaternion.identity);
                     star.GetComponent<Rigidbody2D>().velocity = config.AppearSpeed;
+                    entityList.Add(star.GetComponent<ILooper>());
                     deleteList.Add(config);
                 }
             }

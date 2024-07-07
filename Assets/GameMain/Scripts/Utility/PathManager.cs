@@ -18,6 +18,11 @@ namespace GameMain.Scripts.Utility
         {
             return $"Entity/{assetName}";
         }
+        
+        public static string GetManagerAsset(string assetName)
+        {
+            return $"Manager/{assetName}";
+        }
 
         public static string GetUIAsset(string assetName)
         {

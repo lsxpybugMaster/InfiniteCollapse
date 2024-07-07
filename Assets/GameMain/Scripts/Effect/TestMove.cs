@@ -37,11 +37,11 @@ public class TestMove : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Z))
         {
             Debug.Log("start bullet time");
-            EffectController.Instance.startbulletTime();
+            EffectManager.Instance.startbulletTime();
         }
         if(Input.GetKeyDown(KeyCode.O))
         {
-            EffectController.Instance.stopBulletTime();
+            EffectManager.Instance.stopBulletTime();
         }
         
     }
