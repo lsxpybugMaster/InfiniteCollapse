@@ -50,6 +50,7 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
             base.OnGameInit();
             GetComponent<Rigidbody2D>().gravityScale = 0f;
             mColl = GetComponent<Collider2D>();
+            mColl.isTrigger = true;
 
             mOuterColl = Instantiate(new GameObject("Outer"), transform).AddComponent<CircleCollider2D>();
             mOuterColl.transform.SetParent(transform);
@@ -146,7 +147,7 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
 
             var panel = UIKit.OpenPanel<CounterPanel>(new CounterPanelData(onCounterSuccess));
             panel.Parent(transform);
-            panel.transform.localScale = new Vector3(OuterRadius, OuterRadius, 0f);
+            panel.transform.localScale = new Vector3(OuterRadius, OuterRadius, 1f);
 
             //Debug.Log("tIMW FRR");
             //EffectController.Instance.timescaleEffect();
