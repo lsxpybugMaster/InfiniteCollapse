@@ -536,7 +536,7 @@ GameObject:
   - component: {fileID: 3396834907013040290}
   - component: {fileID: 274589427892091170}
   - component: {fileID: 6554768972319455593}
-  - component: {fileID: 3619145701424142692}
+  - component: {fileID: 6594845156335267392}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -600,7 +600,7 @@ MonoBehaviour:
   m_CenterOnActivate: 1
   m_GroupFramingSize: 0.7
   m_FramingMode: 2
-  m_FrameDamping: 2
+  m_FrameDamping: 0.72
   m_AdjustmentMode: 0
   m_MaxDollyIn: 5000
   m_MaxDollyOut: 5000
@@ -610,7 +610,7 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 1
   m_MaximumOrthoSize: 5000
---- !u!114 &3619145701424142692
+--- !u!114 &6594845156335267392
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -624,9 +624,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BindingMode: 1
   m_FollowOffset: {x: 0, y: 0, z: -10}
-  m_XDamping: 1
-  m_YDamping: 1
-  m_ZDamping: 1
+  m_XDamping: 0
+  m_YDamping: 0
+  m_ZDamping: 0
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
