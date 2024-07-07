@@ -367,6 +367,18 @@ PrefabInstance:
       value: LevelManager
       objectReference: {fileID: 0}
     - target: {fileID: 3977945579832594005, guid: 059df8ea5a72a2249ac55e4413ed11a8, type: 3}
+      propertyPath: escapeSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3977945579832594005, guid: 059df8ea5a72a2249ac55e4413ed11a8, type: 3}
+      propertyPath: escapeRadius
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3977945579832594005, guid: 059df8ea5a72a2249ac55e4413ed11a8, type: 3}
+      propertyPath: contrastSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3977945579832594005, guid: 059df8ea5a72a2249ac55e4413ed11a8, type: 3}
       propertyPath: starConfigs.Array.size
       value: 0
       objectReference: {fileID: 0}

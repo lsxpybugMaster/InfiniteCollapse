@@ -24,8 +24,12 @@ namespace Assets.GameMain.Scripts.Character.Player
             _targetGroup.AddMember(transform.parent, playerWeight, playerRadius);
 
 
-            GetComponent<CinemachineVirtualCamera>().LookAt = _targetGroup.transform;
-            
+            var cinema = GetComponent<CinemachineVirtualCamera>();
+            cinema.LookAt = _targetGroup.transform;
+            cinema.Follow = _targetGroup.transform;
+
+            cinema.GetCinemachineComponent<CinemachineGroupComposer>().m_AdjustmentMode =
+                CinemachineGroupComposer.AdjustmentMode.ZoomOnly;
         }
     }
 }

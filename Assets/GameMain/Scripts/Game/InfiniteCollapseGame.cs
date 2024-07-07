@@ -19,18 +19,11 @@ namespace GameMain.Scripts.Game
         {
             var levelManager = Object.FindObjectOfType<LevelManager>();
             
-            var blackHole = Resources.Load<GameObject>(PathManager.GetEntityAsset("BlackHole")).Instantiate();
-            var player = Resources.Load<GameObject>(PathManager.GetEntityAsset("Player")).Instantiate();
-
-            player.Position(levelManager.GetStartPoint());
-
-            Loopers.Add(blackHole.GetComponent<ILooper>());
-            Loopers.Add(player.GetComponent<ILooper>());
             Loopers.Add(levelManager);
+            
+            levelManager.InitLevel(Loopers);
 
             Loopers.ForEach(x => x.OnGameInit());
-            
-            this.GetModel<PlayerModel>().RegisterPlayer(player.transform);
         }
 
         public override void Update(float elapse)
