@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 1
+  m_Name: Edge
   m_Shader: {fileID: -6465566751694194690, guid: 07615082245cd1e47b42b35df48c1d81, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
