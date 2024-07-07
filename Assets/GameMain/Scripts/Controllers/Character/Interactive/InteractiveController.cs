@@ -40,14 +40,21 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
         // 用于counter成功时, 对player修改
         protected PlayerController mCounterPlayer;
 
+        private bool hasInited = false;
+
         public override void OnGameInit()
         {
+            if (hasInited) return;
+            hasInited = true;
+            
             base.OnGameInit();
             GetComponent<Rigidbody2D>().gravityScale = 0f;
             mColl = GetComponent<Collider2D>();
 
             mOuterColl = Instantiate(new GameObject("Outer"), transform).AddComponent<CircleCollider2D>();
+            mOuterColl.transform.SetParent(transform);
             mInnerColl = Instantiate(new GameObject("Inner"), transform).AddComponent<CircleCollider2D>();
+            mInnerColl.transform.SetParent(transform);
 
             mOuterColl.radius = OuterRadius;
             mInnerColl.radius = InnerRadius;
@@ -135,13 +142,13 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
 
         public virtual void OnOuterEnter(PlayerController player)
         {
-            mCounterPlayer = player;
+            mCounterPlayer = player;         
             UIKit.OpenPanel<CounterPanel>(new CounterPanelData(onCounterSuccess));
         }
 
         private void OnOuterExit()
         {
-            mCounterPlayer = null;
+            mCounterPlayer = null;                  
             UIKit.ClosePanel<CounterPanel>();
         }
 

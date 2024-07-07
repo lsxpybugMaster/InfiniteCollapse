@@ -87,6 +87,7 @@ namespace Assets.GameMain.Scripts.Character.Movement
             var tangentDir = Vector3.Cross(mNormalVec, Vector3.forward);
             curForwardSpeed += DashSpeedIncrease;
             MaxSpeed += DashSpeedIncrease;
+            Debug.Log("Enter Dash");
             while (time > 0)
             {
                 time -= Time.deltaTime;
@@ -94,6 +95,7 @@ namespace Assets.GameMain.Scripts.Character.Movement
                 yield return null;
             }
 
+            Debug.Log("end Dash");
             isCounterBlackHole = false;
         }
 

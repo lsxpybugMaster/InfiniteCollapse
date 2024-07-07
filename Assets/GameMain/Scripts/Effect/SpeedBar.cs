@@ -1,3 +1,4 @@
+using Assets.GameMain.Scripts.Character.Movement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,10 +7,12 @@ using UnityEngine.UI;
 public class SpeedBar : MonoBehaviour
 {
     Image img;
+    [SerializeField]
+    private MovementComp playerMovementComp;
 
     public float maxAmount = 1;
-    public float maxSpeed = 100;
-    public float speed = 100;
+    public float maxSpeed = 30;
+    public float speed = 0;
 
     void Start()
     {
@@ -19,6 +22,8 @@ public class SpeedBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        speed = playerMovementComp.CurSpeed;
+        //Debug.Log($"speed : {speed} maxspeed : {maxSpeed} fill : {(speed / maxSpeed) * maxAmount}");
         img.fillAmount = (speed / maxSpeed) * maxAmount;
     }
 }
