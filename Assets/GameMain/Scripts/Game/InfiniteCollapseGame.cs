@@ -29,6 +29,8 @@ namespace GameMain.Scripts.Game
             Loopers.Add(levelManager);
 
             Loopers.ForEach(x => x.OnGameInit());
+            
+            this.GetModel<PlayerModel>().RegisterPlayer(player.transform);
         }
 
         public override void Update(float elapse)

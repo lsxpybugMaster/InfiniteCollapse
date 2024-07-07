@@ -3,6 +3,7 @@ using Assets.GameMain.Scripts.Logic.Input;
 using Assets.GameMain.Scripts.Looper;
 using QFramework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,9 @@ namespace Assets.GameMain.Scripts.Character.Movement
 
         public float curForwardSpeed;
         public float curNormalSpeed;
+
+        public float DashTimeFromBlackHole = 0.5f;
+        public float DashSpeedIncrease = 5f;
         
         public float CurSpeed { get; private set; }
 
@@ -42,7 +46,10 @@ namespace Assets.GameMain.Scripts.Character.Movement
 
         public override void OnUpdate(float eclapse)
         {
-            Move(eclapse);
+            if (!isCounterBlackHole)
+            {
+                Move(eclapse);
+            }
         }
 
         private void Move(float eclapse)
@@ -61,6 +68,33 @@ namespace Assets.GameMain.Scripts.Character.Movement
 
             Debug.DrawLine(transform.position, transform.position + tangentDir * curForwardSpeed, Color.red);
             transform.Translate(movement * eclapse);
+        }
+
+        private bool isCounterBlackHole = false;
+        public void DashForward()
+        {
+            isCounterBlackHole = true;
+            StartCoroutine(DashForwardCoroutine(0.5f));
+        }
+
+        public void StopDash()
+        {
+            StopAllCoroutines();
+        }
+
+        IEnumerator DashForwardCoroutine(float time)
+        {
+            var tangentDir = Vector3.Cross(mNormalVec, Vector3.forward);
+            curForwardSpeed += DashSpeedIncrease;
+            MaxSpeed += DashSpeedIncrease;
+            while (time > 0)
+            {
+                time -= Time.deltaTime;
+                transform.Translate(tangentDir * curForwardSpeed * Time.deltaTime);
+                yield return null;
+            }
+
+            isCounterBlackHole = false;
         }
 
         private Vector3 GetAbsorption()
