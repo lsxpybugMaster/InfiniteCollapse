@@ -20,6 +20,9 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
 
         public float OuterAccelerateRadius;
 
+
+        public float AbsorbMultiplier { get; private set; } = 1f;
+
         public float GetAbsorption(Vector2 position)
         {
             var dis = Vector2.Distance(transform.position, position);
@@ -34,6 +37,7 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
         protected override void OnCounterSuccess()
         {
             base.OnCounterSuccess();
+            
             
         }
 

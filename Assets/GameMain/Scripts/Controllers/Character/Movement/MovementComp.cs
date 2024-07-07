@@ -21,6 +21,8 @@ namespace Assets.GameMain.Scripts.Character.Movement
 
         public float curForwardSpeed;
         public float curNormalSpeed;
+        
+        public float CurSpeed { get; private set; }
 
         public float NormalSpeed;
         
@@ -54,7 +56,8 @@ namespace Assets.GameMain.Scripts.Character.Movement
             curForwardSpeed = Mathf.Clamp(curForwardSpeed, 0f, MaxSpeed);
             
             var movement = tangentDir.normalized * curForwardSpeed + normalDir * NormalSpeed + GetAbsorption();
-            
+
+            CurSpeed = movement.magnitude;
 
             Debug.DrawLine(transform.position, transform.position + tangentDir * curForwardSpeed, Color.red);
             transform.Translate(movement * eclapse);
