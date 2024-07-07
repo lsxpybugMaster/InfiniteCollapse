@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using QFramework;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace GameMain.Scripts.UI
 {
-    public class MainMenuPanelData : UIPanelData
+    public class MenuPanelData : UIPanelData
     {
     }
     

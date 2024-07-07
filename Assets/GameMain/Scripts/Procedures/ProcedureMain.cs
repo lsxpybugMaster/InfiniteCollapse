@@ -14,6 +14,7 @@ namespace GameMain.Scripts.Procedure
         None,
         Launch,
         ChangeScene,
+        Cover,
         Menu,
         Main
     }
@@ -31,6 +32,7 @@ namespace GameMain.Scripts.Procedure
         {
             FSM.AddState(ProcedureStates.Launch, new LaunchState(FSM, this));
             FSM.AddState(ProcedureStates.ChangeScene, new ChangeSceneState(FSM, this));
+            FSM.AddState(ProcedureStates.Cover, new CoverState(FSM, this));
             FSM.AddState(ProcedureStates.Menu, new MenuState(FSM, this));
             FSM.AddState(ProcedureStates.Main, new MainState(FSM, this));
 
@@ -57,7 +59,7 @@ namespace GameMain.Scripts.Procedure
             UIKit.Root.ScreenSpaceOverlayRenderMode();
             UIKit.Root.SetResolution(1920, 1080, 0.5f);
             
-            ChangeSceneState.nextState = ProcedureStates.Menu;
+            ChangeSceneState.nextState = ProcedureStates.Cover;
             ChangeSceneState.nextScenePath = PathManager.GetSceneAsset("Menu");
             mFSM.ChangeState(ProcedureStates.ChangeScene);
 
@@ -115,6 +117,27 @@ namespace GameMain.Scripts.Procedure
             nextScenePath = "";
         }
     } 
+    
+    public class CoverState : AbstractState<ProcedureStates, ProcedureMain>
+    {
+        private CoverPanel panel;
+        
+        public CoverState(FSM<ProcedureStates> fsm, ProcedureMain target) : base(fsm, target)
+        {
+        }
+
+        protected override void OnEnter()
+        {
+            base.OnEnter();
+
+            panel = UIKit.OpenPanel<CoverPanel>();
+
+            panel.pressEnter += () =>
+            {
+                mFSM.ChangeState(ProcedureStates.Menu);
+            };
+        }
+    }
     
     public class MenuState : AbstractState<ProcedureStates, ProcedureMain>
     {

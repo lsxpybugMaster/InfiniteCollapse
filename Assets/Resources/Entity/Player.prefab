@@ -957,8 +957,9 @@ MonoBehaviour:
   curForwardSpeed: 5
   curNormalSpeed: 0
   DashTimeFromBlackHole: 0.5
-  DashSpeedIncrease: 5
+  DashSpeedIncrease: 3
   NormalSpeed: 2
+  dashTime: 0.2
 --- !u!58 &5188614250541025300
 CircleCollider2D:
   m_ObjectHideFlags: 0
