@@ -121,7 +121,10 @@ public class EffectManager : MonoSingleton<EffectManager>, ILooper
 
     public void OnFixedUpdate(float elapse) { }
 
-    public void OnGameShutdown() { }
+    public void OnGameShutdown()
+    {
+        Destroy(gameObject);
+    }
     
     public IArchitecture GetArchitecture()
     {

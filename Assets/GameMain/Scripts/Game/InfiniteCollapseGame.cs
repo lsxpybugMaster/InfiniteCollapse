@@ -6,6 +6,7 @@ using Assets.GameMain.Scripts.Architecture;
 using Assets.GameMain.Scripts.Logic.Input;
 using Assets.GameMain.Scripts.Models;
 using GameMain.Scripts.Controllers;
+using GameMain.Scripts.Events;
 using GameMain.Scripts.Utility;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -19,10 +20,13 @@ namespace GameMain.Scripts.Game
         
         public override void Initialize()
         {
+            GameOver = false;
+            
             var levelManager = Object.FindObjectOfType<LevelManager>();
-
+            
             var effectManager = Resources.Load<GameObject>(PathManager.GetManagerAsset("EffectManager"))
                 .Instantiate()
+                .Name("EffectManager")
                 .GetComponent<EffectManager>();
             
             managerList.Add(levelManager);
@@ -32,6 +36,16 @@ namespace GameMain.Scripts.Game
 
             entityList.ForEach(x => x.OnGameInit());
             managerList.ForEach(x => x.OnGameInit());
+            
+            this.RegisterEvent<PlayerDieEvent>(e =>
+            {
+                GameOver = true;
+            }).UnRegisterWhenGameObjectDestroyed(levelManager);
+            
+            this.RegisterEvent<PlayerEscapeEvent>(e =>
+            {
+                GameOver = true;
+            }).UnRegisterWhenGameObjectDestroyed(levelManager);
         }
 
         public override void Update(float elapse)
@@ -52,6 +66,9 @@ namespace GameMain.Scripts.Game
             
             entityList.ForEach(x => x.OnGameShutdown());
             managerList.ForEach(x => x.OnGameShutdown());
+            
+            entityList.Clear();
+            managerList.Clear();
         }
 
         public IArchitecture GetArchitecture()

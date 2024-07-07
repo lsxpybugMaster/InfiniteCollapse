@@ -38,7 +38,7 @@ namespace Assets.GameMain.Scripts.Character.Movement
 
         private InputManager mInputManager;
 
-        private void Start()
+        public override void OnGameInit()
         {
             _mBlackHoleController = GameObject.FindGameObjectWithTag("BlackHole").GetComponent<BlackHole>();
             mInputManager = InputManager.Instance;
@@ -114,6 +114,13 @@ namespace Assets.GameMain.Scripts.Character.Movement
         {
             MaxSpeed += increase;
             curForwardSpeed += increase;
+        }
+
+        public override void OnGameShutdown()
+        {
+            base.OnGameShutdown();
+            
+            StopAllCoroutines();
         }
     }
 }
