@@ -9,50 +9,41 @@ using Assets.GameMain.Scripts.Character.Player;
 using QFramework;
 using Sirenix.OdinInspector;
 using GameMain.Scripts.Controllers;
+using GameMain.Scripts.Controllers.Character.Interactive;
 using UnityEngine;
 
 namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
 {
-    public class BlackHole : ControllerBase
+    public class BlackHole : InteractiveController
     {
         public float AbsorbSpeed;
 
         public float OuterAccelerateRadius;
-        public CircleCollider2D OuterAclColl;
-        public CircleCollider2D InnerAbsorbColl;
-
-        private void Start()
-        {
-            OuterAclColl = transform.Find("Outer").GetComponent<CircleCollider2D>();
-            InnerAbsorbColl = transform.Find("Inner").GetComponent<CircleCollider2D>();
-            OuterAclColl.OnCollisionEnterEvent(onOuterCollision).UnRegisterWhenGameObjectDestroyed(this);
-        }
 
         public float GetAbsorption(Vector2 position)
         {
             var dis = Vector2.Distance(transform.position, position);
             return AbsorbSpeed / (dis * dis);
         }
-        
-        
 
-        public override void OnUpdate(float eclapse)
+        public override void OnOuterEnter(PlayerController player)
         {
+            base.OnOuterEnter(player);
         }
 
-        private void onOuterCollision(Collision coll)
+        protected override void OnCounterSuccess()
         {
-            if (coll.transform.TryGetComponent(out PlayerController player))
-            {
-                
-            }
-        }
-        
-
-        public override void OnFixedUpdate(float eclapse)
-        {
+            base.OnCounterSuccess();
             
         }
 
+        public override void OnInnerCollision(ControllerBase other)
+        {
+            var player = other as PlayerController;
+            if (player != null)
+            {
+                player.OnDie();
+            }
+        }
     }
 }

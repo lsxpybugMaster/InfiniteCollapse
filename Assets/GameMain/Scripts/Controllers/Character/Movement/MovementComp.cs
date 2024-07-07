@@ -70,5 +70,11 @@ namespace Assets.GameMain.Scripts.Character.Movement
         {
             curForwardSpeed -= descreament;
         }
+
+        public void IncreaseForwardSpeed(float increase)
+        {
+            MaxSpeed += increase;
+            curForwardSpeed += increase;
+        }
     }
 }

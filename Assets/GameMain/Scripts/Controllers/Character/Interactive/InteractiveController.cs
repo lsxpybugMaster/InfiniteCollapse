@@ -34,7 +34,11 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
         [InfoBox("除了残骸基本都可以跳qte")]
         public bool CanCounter;
 
-        protected Action<InteractiveController> onCounterSuccess;
+        protected Action onCounterSuccess;
+        
+        
+        // 用于counter成功时, 对player修改
+        protected PlayerController mCounterPlayer;
 
         public override void OnGameInit()
         {
@@ -66,6 +70,8 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
 
             mInnerColl.OnTriggerEnter2DEvent(coll => OnInnerCollision(coll.GetComponent<ControllerBase>()))
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            onCounterSuccess = OnCounterSuccess;
         }
 
         private void Start()
@@ -87,6 +93,11 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
                     controller.mMovementComp.DecreaseForwardSpeed(SpeedDownNumOnCollide);
                 });
             }
+        }
+
+        public virtual void DestroySelf()
+        {
+            Destroy(gameObject);
         }
 
         private bool hasCounterShowed;
@@ -124,12 +135,19 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
 
         public virtual void OnOuterEnter(PlayerController player)
         {
-            UIKit.OpenPanel<CounterPanel>(UILevel.PopUI, new CounterPanelData());
+            mCounterPlayer = player;
+            UIKit.OpenPanel<CounterPanel>(UILevel.PopUI, new CounterPanelData(onCounterSuccess));
         }
 
         private void OnOuterExit()
         {
+            mCounterPlayer = null;
             UIKit.ClosePanel<CounterPanel>();
+        }
+
+        protected virtual void OnCounterSuccess()
+        {
+            
         }
     }
 }
