@@ -38,7 +38,7 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
         {
             base.OnCounterSuccess();
             
-            
+            mCounterPlayer.mMovementComp.DashForward();
         }
 
         public override void OnInnerCollision(ControllerBase other)
