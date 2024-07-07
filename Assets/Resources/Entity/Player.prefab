@@ -855,7 +855,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d777360643feee4eb58c4df5ef7dc1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  circleHud: {fileID: 0}
 --- !u!114 &7887991524622359097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -873,8 +872,9 @@ MonoBehaviour:
   curForwardSpeed: 5
   curNormalSpeed: 0
   DashTimeFromBlackHole: 0.5
-  DashSpeedIncrease: 5
+  DashSpeedIncrease: 3
   NormalSpeed: 2
+  dashTime: 0.2
 --- !u!58 &5188614250541025300
 CircleCollider2D:
   m_ObjectHideFlags: 0

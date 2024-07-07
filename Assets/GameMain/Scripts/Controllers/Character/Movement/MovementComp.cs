@@ -70,11 +70,12 @@ namespace Assets.GameMain.Scripts.Character.Movement
             transform.Translate(movement * eclapse);
         }
 
+        public float dashTime = 0.3f;
         private bool isCounterBlackHole = false;
         public void DashForward()
         {
             isCounterBlackHole = true;
-            StartCoroutine(DashForwardCoroutine(0.5f));
+            StartCoroutine(DashForwardCoroutine(dashTime));
         }
 
         public void StopDash()
