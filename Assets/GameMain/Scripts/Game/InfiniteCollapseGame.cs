@@ -8,39 +8,50 @@ using Assets.GameMain.Scripts.Models;
 using GameMain.Scripts.Controllers;
 using GameMain.Scripts.Utility;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GameMain.Scripts.Game
 {
     public class InfiniteCollapseGame : GameBase, IController
     {
-        public List<ILooper> Loopers = new List<ILooper>();
+        private List<ILooper> entityList = new List<ILooper>();
+        private List<ILooper> managerList = new List<ILooper>();
         
         public override void Initialize()
         {
             var levelManager = Object.FindObjectOfType<LevelManager>();
-            
-            Loopers.Add(levelManager);
-            
-            levelManager.InitLevel(Loopers);
 
-            Loopers.ForEach(x => x.OnGameInit());
+            var effectManager = Resources.Load<GameObject>(PathManager.GetManagerAsset("EffectManager"))
+                .Instantiate()
+                .GetComponent<EffectManager>();
+            
+            managerList.Add(levelManager);
+            managerList.Add(effectManager);
+            
+            levelManager.InitLevel(entityList);
+
+            entityList.ForEach(x => x.OnGameInit());
+            managerList.ForEach(x => x.OnGameInit());
         }
 
         public override void Update(float elapse)
         {
-            Loopers.ForEach(x => x.OnUpdate(elapse));
+            entityList.ForEach(x => x.OnUpdate(elapse));
+            managerList.ForEach(x => x.OnUpdate(elapse));
         }
 
         public override void FixedUpdate(float elapse)
         {
-            Loopers.ForEach(x => x.OnFixedUpdate(elapse));
+            entityList.ForEach(x => x.OnFixedUpdate(elapse));
+            managerList.ForEach(x => x.OnFixedUpdate(elapse));
         }
         
         public override void Shutdown()
         {
             base.Shutdown();
             
-            Loopers.ForEach(x => x.OnGameShutdown());
+            entityList.ForEach(x => x.OnGameShutdown());
+            managerList.ForEach(x => x.OnGameShutdown());
         }
 
         public IArchitecture GetArchitecture()

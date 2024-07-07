@@ -50,7 +50,8 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
             base.OnGameInit();
             GetComponent<Rigidbody2D>().gravityScale = 0f;
             mColl = GetComponent<Collider2D>();
-            mColl.isTrigger = true;
+            if (mColl != null)
+                mColl.isTrigger = true;
 
             mOuterColl = Instantiate(new GameObject("Outer"), transform).AddComponent<CircleCollider2D>();
             mOuterColl.transform.SetParent(transform);
@@ -162,7 +163,7 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
         protected virtual void OnCounterSuccess()
         {
            
-            EffectController.Instance.screenLowEffect();
+            EffectManager.Instance.screenLowEffect();
         }
     }
 }
