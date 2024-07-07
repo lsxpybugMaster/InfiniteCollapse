@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class EffectController : MonoSingleton<EffectController>
 {
-    [Header("Ïà»ú¶¶¶¯")]
+    [Header("ç›¸æœºæŠ–åŠ¨")]
     [SerializeField]
     private MMF_Player screenLowFeedBack;
     [SerializeField]
@@ -19,16 +19,16 @@ public class EffectController : MonoSingleton<EffectController>
     [SerializeField]
     private MMF_Player timescaleFeedBack;
 
-    [Header("×Óµ¯Ê±¼ä")]
+    [Header("å­å¼¹æ—¶é—´")]
     [SerializeField]
     private float bulletTimeScale = 0.3f;
     [SerializeField]
     private float bulletTimeDuration = 2f;
     [SerializeField]
-    public float transitionDuration = 0.5f; // Ê±¼äËõ·Å½¥±äµÄ³ÖĞøÊ±¼ä
+    public float transitionDuration = 0.5f; // æ—¶é—´ç¼©æ”¾æ¸å˜çš„æŒç»­æ—¶é—´
 
     private float originalFixedDeltaTime; 
-    private bool isBulletTimeActive = false; // ±ê¼Ç×Óµ¯Ê±¼äÊÇ·ñ¼¤»î
+    private bool isBulletTimeActive = false; // æ ‡è®°å­å¼¹æ—¶é—´æ˜¯å¦æ¿€æ´»
     private Coroutine bulletTimeCoroutine;
 
     private void Start()
@@ -66,17 +66,17 @@ public class EffectController : MonoSingleton<EffectController>
             //Time.fixedDeltaTime = originalFixedDeltaTime * bulletTimeScale;
 
 
-            // Ê¹ÓÃ DoTween Æ½»¬µØ¸Ä±äÊ±¼äËõ·Å
+            // ä½¿ç”¨ DoTween å¹³æ»‘åœ°æ”¹å˜æ—¶é—´ç¼©æ”¾
             DOTween.To(() => Time.timeScale, x => Time.timeScale = x, bulletTimeScale, transitionDuration)
                 .OnUpdate(() => Time.fixedDeltaTime = originalFixedDeltaTime * Time.timeScale)
                 .OnComplete(() => bulletTimeCoroutine = StartCoroutine(BulletTimeCountdown()));
 
-            //Æô¶¯Ğ­³Ì£¬ÆäÊ±¼ä²»ÊÜ×Óµ¯Ê±¼äÓ°Ïì
+            //å¯åŠ¨åç¨‹ï¼Œå…¶æ—¶é—´ä¸å—å­å¼¹æ—¶é—´å½±å“
             //bulletTimeCoroutine = StartCoroutine(BulletTimeCountdown());
         }
     }
 
-    //ÒÀ¾İÕæÊµÊ±¼äÀ´¼ÆÊ±µÄĞ­³Ì
+    //ä¾æ®çœŸå®æ—¶é—´æ¥è®¡æ—¶çš„åç¨‹
     private IEnumerator BulletTimeCountdown()
     {
         float startTime = Time.realtimeSinceStartup;
@@ -87,7 +87,7 @@ public class EffectController : MonoSingleton<EffectController>
         stopBulletTime();
     }
 
-    //×Óµ¯Ê±¼ä¿ªÊ¼ºó×Ô¶¯µØÈ¥µ÷ÓÃ£¬Ò²¿ÉÒÔÓÉÍæ¼Òµ÷ÓÃ£¨ÌáÇ°½áÊø×Óµ¯Ê±¼ä£©
+    //å­å¼¹æ—¶é—´å¼€å§‹åè‡ªåŠ¨åœ°å»è°ƒç”¨ï¼Œä¹Ÿå¯ä»¥ç”±ç©å®¶è°ƒç”¨ï¼ˆæå‰ç»“æŸå­å¼¹æ—¶é—´ï¼‰
     public void stopBulletTime()
     {
         if (isBulletTimeActive)
@@ -102,14 +102,14 @@ public class EffectController : MonoSingleton<EffectController>
                 StopCoroutine(bulletTimeCoroutine);
             }
 
-            // Ê¹ÓÃ DoTween Æ½»¬µØ»Ö¸´Ê±¼äËõ·Å
+            // ä½¿ç”¨ DoTween å¹³æ»‘åœ°æ¢å¤æ—¶é—´ç¼©æ”¾
             DOTween.To(() => Time.timeScale, x => Time.timeScale = x, 1f, transitionDuration)
                 .OnUpdate(() => Time.fixedDeltaTime = originalFixedDeltaTime * Time.timeScale)
                 .OnComplete(() => isBulletTimeActive = false);
         }
     }
 
-    //×Óµ¯Ê±¼ä½áÊøºóµÄÌØĞ§
+    //å­å¼¹æ—¶é—´ç»“æŸåçš„ç‰¹æ•ˆ
     public void EffectAfterBulletTime()
     {
 
