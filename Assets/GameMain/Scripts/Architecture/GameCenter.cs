@@ -15,6 +15,7 @@ namespace Assets.GameMain.Scripts.Architecture
             // this.RegisterModel(new LooperModel());
             
             this.RegisterModel(new PlayerModel());
+            this.RegisterModel(new LevelModel());
         }
     }
 }

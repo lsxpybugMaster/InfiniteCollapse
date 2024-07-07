@@ -2,27 +2,35 @@
 using System.Linq;
 using Assets.GameMain.Scripts.Architecture;
 using Assets.GameMain.Scripts.Looper;
+using Assets.GameMain.Scripts.Models;
 using GameMain.Scripts.Tools.Level_Manager;
 using GameMain.Scripts.Utility;
 using QFramework;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GameMain.Scripts.Controllers
 {
     public class LevelManager : ControllerBase
     {
-        [TitleGroup("Start Point")]
+        [TitleGroup("Level Config")]
         public Transform startPoint;
+        
+        [BoxGroup("Victory Condition")] public float escapeRadius;
+        [BoxGroup("Victory Condition")] public float escapeSpeed;
+        [BoxGroup("Victory Condition")] public float contrastSpeed;
 
         [TitleGroup("Stars")] 
         public Transform starsHolder;
         
         [ListDrawerSettings(CustomAddFunction = "ConfigAddFunc", CustomRemoveIndexFunction = "ConfigRemoveFunc")]
-        public List<StarConfig> starConfigs = new List<StarConfig>();
+        public List<StarConfig> starConfigs = new ();
 
-        private List<StarConfig> deleteList = new();
-        private List<StarConfig> starWaitList = new List<StarConfig>();
+        private GameObject frontier;
+        
+        private List<StarConfig> deleteList = new ();
+        private List<StarConfig> starWaitList = new ();
         private float gameTime = 0f;
 
         public override void OnGameInit()
@@ -32,6 +40,11 @@ namespace GameMain.Scripts.Controllers
             gameTime = 0f;
             
             starWaitList.AddRange(starConfigs);
+
+            frontier = Resources.Load<GameObject>(PathManager.GetEntityAsset("Frontier")).Instantiate();
+            frontier.LocalScale(escapeRadius, escapeRadius, escapeRadius);
+            
+            this.GetModel<LevelModel>().RegisterLevel(this);
         }
 
         public override void OnUpdate(float elapse)
@@ -40,6 +53,13 @@ namespace GameMain.Scripts.Controllers
 
             gameTime += elapse;
 
+            UpdateStarWaitList(elapse);
+
+            UpdateFrontier(elapse);
+        }
+
+        private void UpdateStarWaitList(float elapse)
+        {
             deleteList.Clear();
             
             foreach (var config in starWaitList)
@@ -57,6 +77,13 @@ namespace GameMain.Scripts.Controllers
             {
                 starWaitList.Remove(config);
             }
+        }
+
+        private void UpdateFrontier(float elapse)
+        {
+            var currentScale = escapeRadius - gameTime * contrastSpeed;
+            currentScale = currentScale > 0 ? currentScale : 0f;
+            frontier.LocalScale(currentScale, currentScale, currentScale);
         }
 
 #if UNITY_EDITOR

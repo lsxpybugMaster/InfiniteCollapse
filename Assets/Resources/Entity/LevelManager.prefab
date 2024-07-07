@@ -79,7 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {fileID: 8263405100187590231}
   starsHolder: {fileID: 4037942720061593257}
-  startConfigs: []
+  starConfigs: []
 --- !u!1 &7600641238325966903
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,7 +90,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4037942720061593257}
   m_Layer: 0
-  m_Name: Star Holder
+  m_Name: StarHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
