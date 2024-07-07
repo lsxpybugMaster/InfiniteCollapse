@@ -136,7 +136,7 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
         public virtual void OnOuterEnter(PlayerController player)
         {
             mCounterPlayer = player;
-            UIKit.OpenPanel<CounterPanel>(UILevel.PopUI, new CounterPanelData(onCounterSuccess));
+            UIKit.OpenPanel<CounterPanel>(new CounterPanelData(onCounterSuccess));
         }
 
         private void OnOuterExit()
