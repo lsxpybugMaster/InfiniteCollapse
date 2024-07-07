@@ -127,7 +127,7 @@ MonoBehaviour:
         m_Calls: []
   DebugActive: 0
   FeedbacksList:
-  - rid: 2449352511633489921
+  - rid: 2449352528861069313
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   StopFeedbacksOnDisable: 0
@@ -135,17 +135,17 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2449352511633489921
-      type: {class: MMF_CameraShake, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
+    - rid: 2449352528861069313
+      type: {class: MMF_CinemachineImpulse, ns: MoreMountains.FeedbacksForThirdParty, asm: MoreMountains.Tools}
       data:
         Active: 1
-        UniqueID: 283528835
-        Label: Camera Shake
+        UniqueID: -310196980
+        Label: Cinemachine Impulse
         ChannelMode: 0
         Channel: 0
         MMChannelDefinition: {fileID: 0}
         Chance: 100
-        DisplayColor: {r: 0.6509434, g: 0.28043783, b: 0.41391122, a: 1}
+        DisplayColor: {r: 0, g: 0, b: 0, a: 1}
         Timing:
           TimescaleMode: 0
           ExcludeFromHoldingPauses: 0
@@ -209,14 +209,48 @@ MonoBehaviour:
           ButtonText: Automatic Shaker Setup
         Owner: {fileID: 8268344558603183418}
         DebugActive: 0
-        RepeatUntilStopped: 0
-        CameraShakeProperties:
-          Duration: 0.1
-          Amplitude: 0.5
-          Frequency: 40
-          AmplitudeX: 1
-          AmplitudeY: 1
-          AmplitudeZ: 1
+        m_ImpulseDefinition:
+          m_ImpulseChannel: 1
+          m_ImpulseShape: 0
+          m_CustomImpulseShape:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          m_ImpulseDuration: 0.2
+          m_ImpulseType: 3
+          m_DissipationRate: 0
+          m_RawSignal: {fileID: 11400000, guid: bcf6524ce6451f34cb7106d0c00da9a5, type: 2}
+          m_AmplitudeGain: 1
+          m_FrequencyGain: 1
+          m_RepeatMode: 0
+          m_Randomize: 1
+          m_TimeEnvelope:
+            m_AttackShape:
+              serializedVersion: 2
+              m_Curve: []
+              m_PreInfinity: 2
+              m_PostInfinity: 2
+              m_RotationOrder: 4
+            m_DecayShape:
+              serializedVersion: 2
+              m_Curve: []
+              m_PreInfinity: 2
+              m_PostInfinity: 2
+              m_RotationOrder: 4
+            m_AttackTime: 0
+            m_SustainTime: 0.3
+            m_DecayTime: 0.4
+            m_ScaleWithImpact: 1
+            m_HoldForever: 0
+          m_ImpactRadius: 100
+          m_DirectionMode: 0
+          m_DissipationMode: 2
+          m_DissipationDistance: 100
+          m_PropagationSpeed: 343
+        Velocity: {x: 8, y: 8, z: 8}
+        ClearImpulseOnStop: 0
 --- !u!1 &8268344559002475242
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,10 +519,10 @@ MonoBehaviour:
   screenLowFeedBack: {fileID: 8268344559214727288}
   screenMidFeedBack: {fileID: 8268344558603183418}
   screenHeavyFeedBack: {fileID: 8268344559002475220}
-  timescaleFeedBack: {fileID: 0}
+  timescaleFeedBack: {fileID: 8268344560102567416}
   bulletTimeScale: 0.1
-  bulletTimeDuration: 3
-  transitionDuration: 0.5
+  bulletTimeDuration: 1.5
+  transitionDuration: 0.3
 --- !u!1 &8268344559214727294
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,7 +650,7 @@ MonoBehaviour:
         m_Calls: []
   DebugActive: 0
   FeedbacksList:
-  - rid: 2449352511633489921
+  - rid: 2449352528861069312
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   StopFeedbacksOnDisable: 0
@@ -624,17 +658,17 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2449352511633489921
-      type: {class: MMF_CameraShake, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
+    - rid: 2449352528861069312
+      type: {class: MMF_CinemachineImpulse, ns: MoreMountains.FeedbacksForThirdParty, asm: MoreMountains.Tools}
       data:
         Active: 1
-        UniqueID: 283528835
-        Label: Camera Shake
+        UniqueID: -163306575
+        Label: Cinemachine Impulse
         ChannelMode: 0
         Channel: 0
         MMChannelDefinition: {fileID: 0}
         Chance: 100
-        DisplayColor: {r: 0.6509434, g: 0.28043783, b: 0.41391122, a: 1}
+        DisplayColor: {r: 0, g: 0, b: 0, a: 1}
         Timing:
           TimescaleMode: 0
           ExcludeFromHoldingPauses: 0
@@ -698,14 +732,48 @@ MonoBehaviour:
           ButtonText: Automatic Shaker Setup
         Owner: {fileID: 8268344559214727288}
         DebugActive: 0
-        RepeatUntilStopped: 0
-        CameraShakeProperties:
-          Duration: 0.1
-          Amplitude: 0.5
-          Frequency: 40
-          AmplitudeX: 1
-          AmplitudeY: 1
-          AmplitudeZ: 1
+        m_ImpulseDefinition:
+          m_ImpulseChannel: 1
+          m_ImpulseShape: 0
+          m_CustomImpulseShape:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          m_ImpulseDuration: 0.2
+          m_ImpulseType: 3
+          m_DissipationRate: 0
+          m_RawSignal: {fileID: 11400000, guid: bcf6524ce6451f34cb7106d0c00da9a5, type: 2}
+          m_AmplitudeGain: 1
+          m_FrequencyGain: 1
+          m_RepeatMode: 0
+          m_Randomize: 1
+          m_TimeEnvelope:
+            m_AttackShape:
+              serializedVersion: 2
+              m_Curve: []
+              m_PreInfinity: 2
+              m_PostInfinity: 2
+              m_RotationOrder: 4
+            m_DecayShape:
+              serializedVersion: 2
+              m_Curve: []
+              m_PreInfinity: 2
+              m_PostInfinity: 2
+              m_RotationOrder: 4
+            m_AttackTime: 0
+            m_SustainTime: 0.1
+            m_DecayTime: 0.4
+            m_ScaleWithImpact: 1
+            m_HoldForever: 0
+          m_ImpactRadius: 100
+          m_DirectionMode: 0
+          m_DissipationMode: 2
+          m_DissipationDistance: 100
+          m_PropagationSpeed: 343
+        Velocity: {x: 5, y: 5, z: 5}
+        ClearImpulseOnStop: 0
 --- !u!1 &8268344560102567422
 GameObject:
   m_ObjectHideFlags: 0

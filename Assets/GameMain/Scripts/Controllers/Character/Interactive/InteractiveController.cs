@@ -143,8 +143,10 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
         public virtual void OnOuterEnter(PlayerController player)
         {
             mCounterPlayer = player;
-            //Debug.LogError("White go");
+           
             UIKit.OpenPanel<CounterPanel>(new CounterPanelData(onCounterSuccess));
+            //Debug.Log("tIMW FRR");
+            //EffectController.Instance.timescaleEffect();
         }
 
         private void OnOuterExit()
@@ -155,7 +157,8 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
 
         protected virtual void OnCounterSuccess()
         {
-            
+            Debug.Log("ONCOUNTERSUCCESS");
+            EffectController.Instance.screenLowEffect();
         }
     }
 }

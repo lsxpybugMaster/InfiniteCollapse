@@ -25,7 +25,7 @@ public class SpeedBar : MonoBehaviour
         speed = playerMovementComp.CurSpeed;
         if(speed > maxSpeed)
             speed = maxSpeed;
-        Debug.Log($"speed : {speed} maxspeed : {maxSpeed} fill : {(speed / maxSpeed) * maxAmount}");
+        //Debug.Log($"speed : {speed} maxspeed : {maxSpeed} fill : {(speed / maxSpeed) * maxAmount}");
         img.fillAmount = (speed / maxSpeed) * maxAmount;
     }
 }
