@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.GameMain.Scripts.Character.Player;
+using GameMain.Scripts.Utility;
 using UnityEngine;
 
 namespace Assets.GameMain.Scripts.Logic.Input
@@ -33,6 +35,8 @@ namespace Assets.GameMain.Scripts.Logic.Input
                     OnCounterInput?.Invoke();
                 }
                 cooldown = false;
+                Destroy(qteHint);
+                qteHint = null;
                 StartCoroutine(cooldowncoro());
             };
 
@@ -40,10 +44,23 @@ namespace Assets.GameMain.Scripts.Logic.Input
 
         }
 
+
+        private PlayerController player;
+        private void Start()
+        {
+            player = GameObject.FindObjectOfType<PlayerController>();
+        }
+
+
+        private GameObject qteHint;
         IEnumerator cooldowncoro()
         {
             yield return new WaitForSeconds(1f);
             cooldown = true;
+            qteHint = Resources.Load<GameObject>(PathManager.GetEntityAsset("QTENotice")).Instantiate();
+            qteHint.Parent(player);
+            qteHint.transform.localPosition = Vector3.zero;
+            
         }
     }
 }

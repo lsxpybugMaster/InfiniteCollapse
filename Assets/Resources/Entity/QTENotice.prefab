@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5202956643704921739}
   - component: {fileID: 5402533430025920913}
   - component: {fileID: 5402071082442369955}
-  - component: {fileID: 5204994900841835616}
   m_Layer: 0
   m_Name: QTENotice
   m_TagString: Untagged
@@ -4811,16 +4810,3 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &5204994900841835616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5205411305120907755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9c4e89389fa607479b0744ec6611490, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effectDuration: 3
