@@ -31,9 +31,18 @@ public class EffectController : MonoSingleton<EffectController>
     private bool isBulletTimeActive = false; // 标记子弹时间是否激活
     private Coroutine bulletTimeCoroutine;
 
+    //[Header("一些捆绑的物体")]
+    //[SerializeField]
+    //private GameObject TimeScaleControllerPrefab;
+
     private void Start()
     {   
-        originalFixedDeltaTime = Time.fixedDeltaTime;       
+        originalFixedDeltaTime = Time.fixedDeltaTime;   
+        
+    }
+    public override void OnSingletonInit()
+    {
+        base.OnSingletonInit();
     }
 
     public void screenLowEffect()
