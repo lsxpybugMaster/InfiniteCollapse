@@ -1,6 +1,6 @@
 ﻿namespace GameMain.Scripts.Events
 {
-    public class OutBoundryFailEvent
+    public class PlayerFail2EscapeEvent
     {
         
     }

@@ -4,6 +4,7 @@ using Assets.GameMain.Scripts.Architecture;
 using Assets.GameMain.Scripts.Character.Movement;
 using Assets.GameMain.Scripts.Looper;
 using Assets.GameMain.Scripts.Models;
+using GameMain.Scripts.Commands;
 using GameMain.Scripts.Tools.Level_Manager;
 using GameMain.Scripts.Utility;
 using QFramework;
@@ -20,7 +21,7 @@ namespace GameMain.Scripts.Controllers
         
         [BoxGroup("Victory Condition")] public float escapeRadius;
         [BoxGroup("Victory Condition")] public float escapeSpeed;
-        [BoxGroup("Victory Condition")] public float contrastSpeed;
+        // [BoxGroup("Victory Condition")] public float contrastSpeed;
 
         [TitleGroup("Stars")] 
         public Transform starsHolder;
@@ -102,28 +103,20 @@ namespace GameMain.Scripts.Controllers
 
         private void UpdateFrontier(float elapse)
         {
-            var currentScale = escapeRadius - gameTime * contrastSpeed;
+            var dis2Frontier = 
+                escapeRadius - Vector2.Distance(player.transform.position, Vector2.zero);
             
-            if (currentScale > 0)
+            if (dis2Frontier is > 0f and < 1f)
             {
-                var dis2Frontier =
-                    currentScale - Vector2.Distance(player.transform.position, blackHole.transform.position);
-                if (dis2Frontier is > 0f and < 1f)
+                if (movementComp.CurSpeed >= escapeSpeed)
                 {
-                    if (movementComp.CurSpeed >= escapeSpeed)
-                    {
-                        Debug.Log("Success");
-                    }
-                    else
-                    {
-                        Debug.Log("Fail");
-                    }
+                    Debug.Log("Success");
+                }
+                else
+                {
+                    this.SendCommand<PlayerFail2EscapeCommand>();
                 }
             }
-            
-            currentScale = currentScale > 0 ? currentScale : 0f;
-            frontier.LocalScale(currentScale, currentScale, currentScale);
-            
         }
 
 #if UNITY_EDITOR

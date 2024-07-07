@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using GameMain.Scripts.Controllers.UI.Counter;
@@ -6,11 +7,8 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    void Update()
+    private void OnDrawGizmos()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            UIKit.OpenPanel<CounterPanel>();
-        }
+        Gizmos.DrawWireSphere(Vector3.zero, 1f);
     }
 }
