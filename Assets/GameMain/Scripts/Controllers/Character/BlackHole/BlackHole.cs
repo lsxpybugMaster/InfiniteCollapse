@@ -1,5 +1,6 @@
 ﻿using Assets.GameMain.Scripts.Looper;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,9 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
 
         public float OuterAccelerateRadius;
 
+        public float OutBoundrySpeed = 100f;
+        public float OutBoundryAbsorbTime = 0.5f;
+
 
         public float AbsorbMultiplier { get; private set; } = 1f;
 
@@ -29,9 +33,18 @@ namespace Assets.GameMain.Scripts.Character.BlackHoleLogic
             base.OnGameInit();
             this.RegisterEvent<OutBoundryFailEvent>(ctx =>
             {
-
+                StartCoroutine(SetOutBoundryAbosorb());
             });
         }
+
+        private float preserveAbosorbSpeed;
+        private IEnumerator SetOutBoundryAbosorb()
+        {
+            preserveAbosorbSpeed = AbsorbSpeed;
+            AbsorbSpeed = OutBoundrySpeed;
+            yield return new WaitForSeconds(OutBoundryAbsorbTime);
+            AbsorbSpeed = preserveAbosorbSpeed;
+        } 
 
         public float GetAbsorption(Vector2 position)
         {

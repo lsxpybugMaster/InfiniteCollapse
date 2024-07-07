@@ -29,16 +29,7 @@ namespace Assets.GameMain.Scripts.Character.Player
         {
             mMovementComp.OnUpdate(eclapse);
         }
-
-        /*private void Update()
-        {
-            mMovementComp.OnUpdate(Time.deltaTime);
-        }
-
-        private void FixedUpdate()
-        {
-            mMovementComp.OnFixedUpdate(Time.fixedDeltaTime);
-        }*/
+        
 
         public override void OnFixedUpdate(float eclapse)
         {
@@ -56,6 +47,14 @@ namespace Assets.GameMain.Scripts.Character.Player
         public void OnCollisionWithInteractive(Action<PlayerController> action)
         {
             action?.Invoke(this);
+        }
+
+
+        public Sprite circleHud;
+
+        private void UpdateCircle()
+        {
+            
         }
     }
 }
