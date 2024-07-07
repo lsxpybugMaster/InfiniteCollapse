@@ -1,37 +1,71 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.GameMain.Scripts.Architecture;
+using Assets.GameMain.Scripts.Character.Movement;
 using Assets.GameMain.Scripts.Looper;
+using Assets.GameMain.Scripts.Models;
 using GameMain.Scripts.Tools.Level_Manager;
 using GameMain.Scripts.Utility;
 using QFramework;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GameMain.Scripts.Controllers
 {
     public class LevelManager : ControllerBase
     {
-        [TitleGroup("Start Point")]
+        [TitleGroup("Level Config")]
         public Transform startPoint;
+        
+        [BoxGroup("Victory Condition")] public float escapeRadius;
+        [BoxGroup("Victory Condition")] public float escapeSpeed;
+        [BoxGroup("Victory Condition")] public float contrastSpeed;
 
         [TitleGroup("Stars")] 
         public Transform starsHolder;
         
         [ListDrawerSettings(CustomAddFunction = "ConfigAddFunc", CustomRemoveIndexFunction = "ConfigRemoveFunc")]
-        public List<StarConfig> starConfigs = new List<StarConfig>();
+        public List<StarConfig> starConfigs = new ();
 
-        private List<StarConfig> deleteList = new();
-        private List<StarConfig> starWaitList = new List<StarConfig>();
+        private List<ILooper> mainLoop;
+        
+        private GameObject player;
+        private MovementComp movementComp;
+        private GameObject blackHole;
+        private GameObject frontier;
+        
+        private List<StarConfig> deleteList = new ();
+        private List<StarConfig> starWaitList = new ();
         private float gameTime = 0f;
 
+        public void InitLevel(List<ILooper> gameLoop)
+        {
+            mainLoop = gameLoop;
+            
+            blackHole = Resources.Load<GameObject>(PathManager.GetEntityAsset("BlackHole")).Instantiate();
+            
+            player = Resources.Load<GameObject>(PathManager.GetEntityAsset("Player")).Instantiate();
+            movementComp = player.GetComponent<MovementComp>();
+            player.Position(GetStartPoint());
+            this.GetModel<PlayerModel>().RegisterPlayer(player.transform);
+            
+            frontier = Resources.Load<GameObject>(PathManager.GetEntityAsset("Frontier")).Instantiate();
+            frontier.LocalScale(escapeRadius, escapeRadius, escapeRadius);
+            
+            starWaitList.AddRange(starConfigs);
+            
+            this.GetModel<LevelModel>().RegisterLevel(this);
+            
+            mainLoop.Add(blackHole.GetComponent<ILooper>());
+            mainLoop.Add(player.GetComponent<ILooper>());
+        }
+        
         public override void OnGameInit()
         {
             base.OnGameInit();
 
             gameTime = 0f;
-            
-            starWaitList.AddRange(starConfigs);
         }
 
         public override void OnUpdate(float elapse)
@@ -40,6 +74,13 @@ namespace GameMain.Scripts.Controllers
 
             gameTime += elapse;
 
+            UpdateStarWaitList(elapse);
+
+            UpdateFrontier(elapse);
+        }
+
+        private void UpdateStarWaitList(float elapse)
+        {
             deleteList.Clear();
             
             foreach (var config in starWaitList)
@@ -57,6 +98,32 @@ namespace GameMain.Scripts.Controllers
             {
                 starWaitList.Remove(config);
             }
+        }
+
+        private void UpdateFrontier(float elapse)
+        {
+            var currentScale = escapeRadius - gameTime * contrastSpeed;
+            
+            if (currentScale > 0)
+            {
+                var dis2Frontier =
+                    currentScale - Vector2.Distance(player.transform.position, blackHole.transform.position);
+                if (dis2Frontier is > 0f and < 1f)
+                {
+                    if (movementComp.CurSpeed >= escapeSpeed)
+                    {
+                        Debug.Log("Success");
+                    }
+                    else
+                    {
+                        Debug.Log("Fail");
+                    }
+                }
+            }
+            
+            currentScale = currentScale > 0 ? currentScale : 0f;
+            frontier.LocalScale(currentScale, currentScale, currentScale);
+            
         }
 
 #if UNITY_EDITOR
