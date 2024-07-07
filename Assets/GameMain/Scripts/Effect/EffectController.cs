@@ -25,10 +25,10 @@ public class EffectController : MonoSingleton<EffectController>
     [SerializeField]
     private float bulletTimeDuration = 2f;
     [SerializeField]
-    public float transitionDuration = 0.5f; // 时间缩放渐变的持续时间
+    public float transitionDuration = 0.5f; // 时间缩放渐变的持续时�?
 
     private float originalFixedDeltaTime; 
-    private bool isBulletTimeActive = false; // 标记子弹时间是否激活
+    private bool isBulletTimeActive = false; // 标记子弹时间是否激�?
     private Coroutine bulletTimeCoroutine;
 
     //[Header("һЩ���������")]
@@ -75,7 +75,7 @@ public class EffectController : MonoSingleton<EffectController>
             //Time.fixedDeltaTime = originalFixedDeltaTime * bulletTimeScale;
 
 
-            // 使用 DoTween 平滑地改变时间缩放
+            // 使用 DoTween 平滑地改变时间缩�?
             DOTween.To(() => Time.timeScale, x => Time.timeScale = x, bulletTimeScale, transitionDuration)
                 .OnUpdate(() => Time.fixedDeltaTime = originalFixedDeltaTime * Time.timeScale)
                 .OnComplete(() => bulletTimeCoroutine = StartCoroutine(BulletTimeCountdown()));
@@ -96,7 +96,7 @@ public class EffectController : MonoSingleton<EffectController>
         stopBulletTime();
     }
 
-    //子弹时间开始后自动地去调用，也可以由玩家调用（提前结束子弹时间）
+    //子弹时间开始后自动地去调用，也可以由玩家调用（提前结束子弹时间�?
     public void stopBulletTime()
     {
         if (isBulletTimeActive)
@@ -111,7 +111,7 @@ public class EffectController : MonoSingleton<EffectController>
                 StopCoroutine(bulletTimeCoroutine);
             }
 
-            // 使用 DoTween 平滑地恢复时间缩放
+            // 使用 DoTween 平滑地恢复时间缩�?
             DOTween.To(() => Time.timeScale, x => Time.timeScale = x, 1f, transitionDuration)
                 .OnUpdate(() => Time.fixedDeltaTime = originalFixedDeltaTime * Time.timeScale)
                 .OnComplete(() => isBulletTimeActive = false);

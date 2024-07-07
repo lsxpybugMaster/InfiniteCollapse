@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1585591224231553768}
   - component: {fileID: 3654337699139662090}
   m_Layer: 0
-  m_Name: Debris
+  m_Name: Debris 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -163,7 +163,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 02dba6b2b0574ae4ab6cf08e40318893, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9cf3ede895c44a04e915262864a3628d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
