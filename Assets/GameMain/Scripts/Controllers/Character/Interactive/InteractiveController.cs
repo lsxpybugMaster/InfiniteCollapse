@@ -142,7 +142,8 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
 
         public virtual void OnOuterEnter(PlayerController player)
         {
-            mCounterPlayer = player;         
+            mCounterPlayer = player;
+            //Debug.LogError("White go");
             UIKit.OpenPanel<CounterPanel>(new CounterPanelData(onCounterSuccess));
         }
 
