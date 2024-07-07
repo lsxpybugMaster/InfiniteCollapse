@@ -54,6 +54,7 @@ namespace Assets.GameMain.Scripts.Character.Player
         private void UpdateCircle()
         {
             var dis = Vector3.Distance(transform.position, mBlackHole.transform.position);
+            dis = dis * 0.59f / 3f;
             mCircleHud.transform.localScale = new Vector3(dis, dis, 1);
         }
     }

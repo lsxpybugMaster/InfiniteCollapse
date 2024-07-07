@@ -2,6 +2,7 @@
 using Assets.GameMain.Scripts.Character.Player;
 using Assets.GameMain.Scripts.Logic.Input;
 using GameMain.Scripts.Controllers.UI.Counter;
+using GameMain.Scripts.Utility;
 using QFramework;
 using Sirenix.OdinInspector;
 using Unity.VisualScripting;
@@ -72,7 +73,7 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
             {
                 if (coll.TryGetComponent(out PlayerController player))
                 {
-                    UIKit.ClosePanel<CounterPanel>();
+                    OnOuterExit();
                 }
             }).UnRegisterWhenGameObjectDestroyed(gameObject);
 
@@ -91,8 +92,26 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
         public override void OnUpdate(float eclapse)
         { 
             //CheckCollision();
+
+            if (qte != null)
+            {
+                var radius = Vector3.Distance(transform.position, mCounterPlayer.transform.position);
+                radius = radius * 0.32f / 3f;
+                qte.transform.localScale = new Vector3(radius, radius, 1);
+            }
         }
 
+        private void Update()
+        {
+            if (qte != null)
+            {
+                var radius = Vector3.Distance(transform.position, mCounterPlayer.transform.position);
+                radius = radius * 0.32f / 3f;
+                qte.transform.localScale = new Vector3(radius, radius, 1);
+            }
+        }
+
+        private GameObject hitPrefab;
         public virtual void OnInnerCollision(ControllerBase other)
         {
             if (other is PlayerController player)
@@ -101,6 +120,12 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
                 {
                     controller.mMovementComp.DecreaseForwardSpeed(SpeedDownNumOnCollide);
                 });
+                
+                hitPrefab = Resources.Load<GameObject>(PathManager.GetEntityAsset("PlayerHit")).Instantiate();
+                hitPrefab.Parent(transform);
+                hitPrefab.transform.localPosition = new Vector3(0, 0, 0);
+                
+                Destroy(gameObject, 0.1f);
             }
         }
 
@@ -142,6 +167,8 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
             Gizmos.DrawWireSphere(transform.position, OuterRadius);
         }
 
+
+        private GameObject qte;
         public virtual void OnOuterEnter(PlayerController player)
         {
             mCounterPlayer = player;
@@ -150,19 +177,36 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
             panel.Parent(transform);
             panel.transform.localScale = new Vector3(OuterRadius, OuterRadius, 1f);
 
+            qte = Resources.Load<GameObject>(PathManager.GetEntityAsset("QTE")).Instantiate();
+            qte.Parent(transform);
+            qte.transform.localPosition = new Vector3(0, 0, 0);
+            qte.transform.localScale = new Vector3(OuterRadius * 0.32f / 3f, OuterRadius * 0.32f / 3f, 1f);
+
             //Debug.Log("tIMW FRR");
             //EffectController.Instance.timescaleEffect();
         }
 
         private void OnOuterExit()
         {
-            mCounterPlayer = null;                  
+            mCounterPlayer = null;
             UIKit.ClosePanel<CounterPanel>();
+            
+            Destroy(qte);
+            qte = null;
         }
 
+        private GameObject counterSuccessPrefab;
         protected virtual void OnCounterSuccess()
         {
-           
+            if (qte != null)
+            {
+                Destroy(qte);
+                qte = null;
+            }
+            counterSuccessPrefab = Resources.Load<GameObject>(PathManager.GetEntityAsset("QTESuccess")).Instantiate();
+            counterSuccessPrefab.Parent(transform);
+            counterSuccessPrefab.transform.localPosition = new Vector3(0, 0, 0);
+            
             EffectManager.Instance.screenLowEffect();
         }
     }
