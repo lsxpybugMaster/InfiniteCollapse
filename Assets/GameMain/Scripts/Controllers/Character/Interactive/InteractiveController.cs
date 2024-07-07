@@ -2,6 +2,7 @@
 using Assets.GameMain.Scripts.Character.Player;
 using Assets.GameMain.Scripts.Logic.Input;
 using GameMain.Scripts.Controllers.UI.Counter;
+using GameMain.Scripts.UI;
 using GameMain.Scripts.Utility;
 using QFramework;
 using Sirenix.OdinInspector;
@@ -173,9 +174,11 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
         {
             mCounterPlayer = player;
 
-            var panel = UIKit.OpenPanel<CounterPanel>(new CounterPanelData(onCounterSuccess));
+            /*var panel = UIKit.OpenPanel<CounterPanel>(new CounterPanelData(onCounterSuccess));
             panel.Parent(transform);
-            panel.transform.localScale = new Vector3(OuterRadius, OuterRadius, 1f);
+            panel.transform.localScale = new Vector3(OuterRadius, OuterRadius, 1f);*/
+            
+            _counterObj = new CounterObj(onCounterSuccess);
 
             qte = Resources.Load<GameObject>(PathManager.GetEntityAsset("QTE")).Instantiate();
             qte.Parent(transform);
@@ -186,10 +189,13 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
             //EffectController.Instance.timescaleEffect();
         }
 
+        private CounterObj _counterObj;
+        
         private void OnOuterExit()
         {
             mCounterPlayer = null;
-            UIKit.ClosePanel<CounterPanel>();
+            //UIKit.ClosePanel<CounterPanel>();
+            _counterObj?.Dispose();
             
             Destroy(qte);
             qte = null;
@@ -203,9 +209,13 @@ namespace GameMain.Scripts.Controllers.Character.Interactive
                 Destroy(qte);
                 qte = null;
             }
-            counterSuccessPrefab = Resources.Load<GameObject>(PathManager.GetEntityAsset("QTESuccess")).Instantiate();
-            counterSuccessPrefab.Parent(transform);
-            counterSuccessPrefab.transform.localPosition = new Vector3(0, 0, 0);
+
+            if (counterSuccessPrefab != null)
+            {
+                counterSuccessPrefab = Resources.Load<GameObject>(PathManager.GetEntityAsset("QTESuccess")).Instantiate();
+                counterSuccessPrefab.Parent(transform);
+                counterSuccessPrefab.transform.localPosition = new Vector3(0, 0, 0);
+            }
             
             EffectManager.Instance.screenLowEffect();
         }
