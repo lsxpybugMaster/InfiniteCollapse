@@ -23,6 +23,7 @@ public class TrailColorControl : MonoBehaviour
     void Update()
     {
         //获取当前玩家速度和通关阈值速度
+
         //currentSpeed = 玩家当前速度;
         //threshold = 当前关卡通关阈值速度;
         //以下的功能是：玩家的速度大于阈值就改变尾迹颜色   应该不需要修改，把上面的两行获取速度的代码写一下就可以了
