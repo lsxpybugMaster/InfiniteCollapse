@@ -128,7 +128,7 @@ namespace GameMain.Scripts.Controllers
             }
         }
 
-#if UNITY_EDITOR
+
         public Vector2 GetStartPoint()
         {
             return startPoint.position;
@@ -163,6 +163,5 @@ namespace GameMain.Scripts.Controllers
             
             starConfigs.RemoveAt(index);
         }  
-#endif
     }
 }
